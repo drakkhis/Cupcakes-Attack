@@ -1,17 +1,25 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    private PlayerInputActions playerControls;
+    private ButtonControl buttonControl;
+    Vector2 movement;
+    bool thrusters;
+    float thrusterTime = 10f;
+    private float _thrustspeed;
     [SerializeField]
-    private InputAction moveAction;
+    private GameObject _thrusterEffect;
     [SerializeField]
-    private InputAction fireAction;
+    private Image thrusterBar;
     [SerializeField]
     private float _speed = 3.5f;
     [SerializeField]
-    private float _boostSpeed = 8.5f;
+    private float _boostSpeed = 5.0f;
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
@@ -40,17 +48,29 @@ public class Player : MonoBehaviour
     [SerializeField]
     private AudioClip _LaserFireClip;
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        playerControls = new PlayerInputActions();
+        buttonControl = (ButtonControl)playerControls.player.trusters.controls[0];
+    }
+    private void OnEnable()
+    {
+        playerControls.Enable();
+    }
+    private void OnDisable()
+    {
+        playerControls.Disable();
+    }
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
         shieldObj = transform.Find("Shields").gameObject;
-        moveAction.Enable();
-        fireAction.Enable();
         shieldObj.SetActive(false);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<spwanManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
-
+        _thrustspeed = _speed * 2;
         if (_spawnManager == null)
         {
             Debug.LogError("Spawn Manager is null");
@@ -75,13 +95,53 @@ public class Player : MonoBehaviour
         calculateMovement();
         if (Time.timeScale != 0)
         {
-            if (fireAction.triggered && Time.time > _canFire)
+            if (playerControls.player.fire.triggered && Time.time > _canFire)
             {
                 shootLaser();
             }
+
+            if (buttonControl.isPressed && thrusterTime > 0f)
+            {
+                if (thrusters == false && thrusterTime < 10f)
+                {
+                    ThrustersNotPressed();
+                }
+                else
+                {
+                    ThrustersPressed();
+                }
+                
+            }
+            else
+            {
+                ThrustersNotPressed();
+            }
         }
+    }
 
+    void ThrustersPressed()
+    {
+        thrusters = true;
+        thrusterTime -= Time.deltaTime;
+        thrusterBar.fillAmount = thrusterTime/10;
+        if (_thrusterEffect.activeSelf != true)
+        _thrusterEffect.SetActive(true);
+    }
 
+    void ThrustersNotPressed()
+    {
+        if (thrusterTime < 10f)
+        {
+            thrusters = false;
+            if (_thrusterEffect.activeSelf != false)
+                _thrusterEffect.SetActive(false);
+            thrusterTime += Time.deltaTime;
+            thrusterBar.fillAmount = thrusterTime/10;
+        }
+        else
+        {
+            thrusterTime = 10f;
+        }
 
     }
 
@@ -174,7 +234,7 @@ public class Player : MonoBehaviour
             Vector3 offset = new Vector3(0, 1.05f, 0);
             Instantiate(_laserPrefab, transform.position + offset, Quaternion.identity);
         }
-        
+
     }
     public void AddScore(int points)
     {
@@ -184,16 +244,21 @@ public class Player : MonoBehaviour
 
     void calculateMovement()
     {
-        float _runSpeed;
-        if (_speedBoost == true)
+        float _runSpeed = 0f;
+        if (thrusters == true)
         {
-            _runSpeed = _boostSpeed;
+            _runSpeed += _thrustspeed;
         }
         else
         {
-            _runSpeed = _speed;
+            _runSpeed += _speed;
         }
-        var moveDirection = moveAction.ReadValue<Vector2>();
+        if (_speedBoost == true)
+        {
+            _runSpeed += _boostSpeed;
+        }
+
+        var moveDirection = playerControls.player.movement.ReadValue<Vector2>();
         transform.Translate(moveDirection * _runSpeed * Time.deltaTime);
 
         if (transform.position.y >= 0)
