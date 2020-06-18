@@ -6,67 +6,69 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    private PlayerInputActions playerControls;
-    private ButtonControl buttonControl;
-    Vector2 movement;
-    bool thrusters;
-    float thrusterTime = 10f;
-    private float _thrustspeed;
+    // Player Variables
     [SerializeField]
-    private GameObject _thrusterEffect;
-    [SerializeField]
-    private Image thrusterBar;
+    private int _health = 3;
     [SerializeField]
     private float _speed = 3.5f;
     [SerializeField]
     private float _boostSpeed = 5.0f;
+    private bool _speedBoost = false;
+    bool _thrusters;
+    float _thrusterTime = 10f;
+    private float _thrustspeed;
+    [SerializeField]
+    private GameObject _thrusterEffect;
+    [SerializeField]
+    private Image _thrusterBar;
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
-    private float _coolDown = 0.5f;
+    private float _laserCoolDown = 0.5f;
     private float _canFire = -1f;
     [SerializeField]
-    private int health = 3;
-    [SerializeField]
-    private int shields = 0;
-    private spwanManager _spawnManager;
+    private AudioClip _LaserFireClip;
     [SerializeField]
     private bool _trippleShot = false;
     [SerializeField]
-    private bool _speedBoost = false;
-    [SerializeField]
     private GameObject _trippleShotPrefab;
-    private GameObject shieldObj;
+    [SerializeField]
+    private int _shields = 0;
+    private GameObject _shieldObj;
+    private Color _color_Green = new Color(0f,1f,0.1039953f,1f);
+    private Color _color_Yellow = new Color(1f, 0.8287185f, 0f, 1f);
+    private Color _color_Red = new Color(1f, 0.1072823f, 0f, 1f);
+    private PlayerInputActions _playerControls;
+    private ButtonControl _buttonControl;
+    private spwanManager _spawnManager;
     private int _score;
     private UIManager _uiManager;
     [SerializeField]
     private GameObject _rightWing;
     [SerializeField]
     private GameObject _leftWing;
-    [SerializeField]
     private AudioSource _audioSource;
-    [SerializeField]
-    private AudioClip _LaserFireClip;
+
     // Start is called before the first frame update
 
     private void Awake()
     {
-        playerControls = new PlayerInputActions();
-        buttonControl = (ButtonControl)playerControls.player.trusters.controls[0];
+        _playerControls = new PlayerInputActions();
+        _buttonControl = (ButtonControl)_playerControls.player.trusters.controls[0];
     }
     private void OnEnable()
     {
-        playerControls.Enable();
+        _playerControls.Enable();
     }
     private void OnDisable()
     {
-        playerControls.Disable();
+        _playerControls.Disable();
     }
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
-        shieldObj = transform.Find("Shields").gameObject;
-        shieldObj.SetActive(false);
+        _shieldObj = transform.Find("Shields").gameObject;
+        _shieldObj.SetActive(false);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<spwanManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
@@ -95,14 +97,14 @@ public class Player : MonoBehaviour
         calculateMovement();
         if (Time.timeScale != 0)
         {
-            if (playerControls.player.fire.triggered && Time.time > _canFire)
+            if (_playerControls.player.fire.triggered && Time.time > _canFire)
             {
                 shootLaser();
             }
 
-            if (buttonControl.isPressed && thrusterTime > 0f)
+            if (_buttonControl.isPressed && _thrusterTime > 0f)
             {
-                if (thrusters == false && thrusterTime < 10f)
+                if (_thrusters == false && _thrusterTime < 10f)
                 {
                     ThrustersNotPressed();
                 }
@@ -121,46 +123,56 @@ public class Player : MonoBehaviour
 
     void ThrustersPressed()
     {
-        thrusters = true;
-        thrusterTime -= Time.deltaTime;
-        thrusterBar.fillAmount = thrusterTime/10;
+        _thrusters = true;
+        _thrusterTime -= Time.deltaTime;
+        _thrusterBar.fillAmount = _thrusterTime/10;
         if (_thrusterEffect.activeSelf != true)
         _thrusterEffect.SetActive(true);
     }
 
     void ThrustersNotPressed()
     {
-        if (thrusterTime < 10f)
+        if (_thrusterTime < 10f)
         {
-            thrusters = false;
+            _thrusters = false;
             if (_thrusterEffect.activeSelf != false)
                 _thrusterEffect.SetActive(false);
-            thrusterTime += Time.deltaTime;
-            thrusterBar.fillAmount = thrusterTime/10;
+            _thrusterTime += Time.deltaTime;
+            _thrusterBar.fillAmount = _thrusterTime/10;
         }
         else
         {
-            thrusterTime = 10f;
+            _thrusterTime = 10f;
         }
 
     }
 
     public void powerUp_TripleShot()
     {
+        if (_trippleShot == true)
+        {
+            StopCoroutine(TrippleShotTimer());
+        }
         _trippleShot = true;
         StartCoroutine(TrippleShotTimer());
     }
 
     public void powerUp_Speed()
     {
+        if (_speedBoost == true)
+        {
+            StopCoroutine(SpeedTimer());
+        }
         _speedBoost = true;
         StartCoroutine(SpeedTimer());
+
     }
 
     public void powerUp_Shield()
     {
-        shields = 2;
-        shieldObj.SetActive(true);
+        _shields = 3;
+        _shieldObj.GetComponent<SpriteRenderer>().color = _color_Green;
+        _shieldObj.SetActive(true);
     }
 
     private IEnumerator TrippleShotTimer()
@@ -186,22 +198,30 @@ public class Player : MonoBehaviour
 
     public void damage()
     {
-        if (shields != 0)
+        if (_shields != 0)
         {
-            shields--;
-            if (shields == 0)
+            _shields--;
+            switch(_shields)
             {
-                shieldObj.SetActive(false);
+                case 2:
+                    _shieldObj.GetComponent<SpriteRenderer>().color = _color_Yellow;
+                    break;
+                case 1:
+                    _shieldObj.GetComponent<SpriteRenderer>().color = _color_Red;
+                    break;
+                case 0:
+                    _shieldObj.SetActive(false);
+                    break;
             }
         }
         else
         {
-            health--;
-            if (health == 2)
+            _health--;
+            if (_health == 2)
             {
                 _rightWing.SetActive(true);
             }
-            else if (health == 1)
+            else if (_health == 1)
             {
                 _leftWing.SetActive(true);
             }
@@ -210,8 +230,8 @@ public class Player : MonoBehaviour
                 _leftWing.SetActive(false);
                 _rightWing.SetActive(false);
             }
-            _uiManager.UpdateLives(health);
-            if (health < 1)
+            _uiManager.UpdateLives(_health);
+            if (_health < 1)
             {
                 _spawnManager.onPlayerDeath();
                 Destroy(this.gameObject);
@@ -222,7 +242,7 @@ public class Player : MonoBehaviour
     void shootLaser()
     {
         _audioSource.Play();
-        _canFire = Time.time + _coolDown;
+        _canFire = Time.time + _laserCoolDown;
 
         if (_trippleShot == true)
         {
@@ -245,7 +265,7 @@ public class Player : MonoBehaviour
     void calculateMovement()
     {
         float _runSpeed = 0f;
-        if (thrusters == true)
+        if (_thrusters == true)
         {
             _runSpeed += _thrustspeed;
         }
@@ -258,7 +278,7 @@ public class Player : MonoBehaviour
             _runSpeed += _boostSpeed;
         }
 
-        var moveDirection = playerControls.player.movement.ReadValue<Vector2>();
+        var moveDirection = _playerControls.player.movement.ReadValue<Vector2>();
         transform.Translate(moveDirection * _runSpeed * Time.deltaTime);
 
         if (transform.position.y >= 0)

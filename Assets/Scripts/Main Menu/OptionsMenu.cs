@@ -1,10 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
-public class MainMenu : MonoBehaviour
+public class OptionsMenu : MonoBehaviour
 {
     [SerializeField]
     private GameObject defaultButton;
@@ -20,8 +19,10 @@ public class MainMenu : MonoBehaviour
             m_EventSystem.SetSelectedGameObject(defaultButton, null);
         }
     }
-    public void loadGame()
+
+    // Update is called once per frame
+    void Update()
     {
-        SceneManager.LoadScene("Game");
+        
     }
 }
