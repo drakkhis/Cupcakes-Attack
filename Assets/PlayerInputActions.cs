@@ -244,9 +244,20 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""d8e6b5d4-2f4b-4e9b-90b9-4e03884e5fc8"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""gamepad"",
+                    ""action"": ""fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""361222f7-20d9-43b3-9aeb-fdc956a11d8b"",
                     ""path"": ""<Keyboard>/leftShift"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""trusters"",
@@ -255,9 +266,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b5736e07-d9a5-40fd-82e4-58c3e3186f35"",
+                    ""id"": ""8550de23-bf2a-4f2c-aefe-0f5f21f7b3bb"",
                     ""path"": ""<Gamepad>/leftShoulder"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": ""gamepad"",
                     ""action"": ""trusters"",

@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Image _thrusterBar;
     [SerializeField]
+    private int _ammo = 15;
+    [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private float _laserCoolDown = 0.5f;
@@ -48,7 +50,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _leftWing;
     private AudioSource _audioSource;
-
+    bool _isPressed = false;
     // Start is called before the first frame update
 
     private void Awake()
@@ -73,6 +75,7 @@ public class Player : MonoBehaviour
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
         _thrustspeed = _speed * 2;
+        _uiManager.SetAmmo(_ammo);
         if (_spawnManager == null)
         {
             Debug.LogError("Spawn Manager is null");
@@ -102,7 +105,7 @@ public class Player : MonoBehaviour
                 shootLaser();
             }
 
-            if (_buttonControl.isPressed && _thrusterTime > 0f)
+            if (_playerControls.player.trusters.ReadValue<float>() > 0 && _thrusterTime > 0f)
             {
                 if (_thrusters == false && _thrusterTime < 10f)
                 {
@@ -120,6 +123,12 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+    void ThrustersButtonPressed()
+    {
+        _isPressed = !_isPressed;
+    }
+
 
     void ThrustersPressed()
     {
@@ -173,6 +182,12 @@ public class Player : MonoBehaviour
         _shields = 3;
         _shieldObj.GetComponent<SpriteRenderer>().color = _color_Green;
         _shieldObj.SetActive(true);
+    }
+
+    public void powerUp_Ammo()
+    {
+        _ammo += 5;
+        _uiManager.SetAmmo(_ammo);
     }
 
     private IEnumerator TrippleShotTimer()
@@ -241,21 +256,26 @@ public class Player : MonoBehaviour
 
     void shootLaser()
     {
-        _audioSource.Play();
-        _canFire = Time.time + _laserCoolDown;
-
-        if (_trippleShot == true)
+        if (_ammo > 0)
         {
-            //Vector3 offset = new Vector3(0, 0, 0);
-            Instantiate(_trippleShotPrefab, transform.position, Quaternion.identity);
-        }
-        else
-        {
-            Vector3 offset = new Vector3(0, 1.05f, 0);
-            Instantiate(_laserPrefab, transform.position + offset, Quaternion.identity);
-        }
+            --_ammo;
+            _uiManager.SetAmmo(_ammo);
+            _audioSource.Play();
+            _canFire = Time.time + _laserCoolDown;
 
+            if (_trippleShot == true)
+            {
+                //Vector3 offset = new Vector3(0, 0, 0);
+                Instantiate(_trippleShotPrefab, transform.position, Quaternion.identity);
+            }
+            else
+            {
+                Vector3 offset = new Vector3(0, 1.05f, 0);
+                Instantiate(_laserPrefab, transform.position + offset, Quaternion.identity);
+            }
+        }
     }
+
     public void AddScore(int points)
     {
         _score += points;

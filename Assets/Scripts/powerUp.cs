@@ -10,6 +10,8 @@ public class powerUp : MonoBehaviour
     private int powerupID;
     [SerializeField]
     private GameObject _audioPrefab;
+    [SerializeField] 
+    private float _rotateSpeed = 100f;
     // Start is called before the first frame update
 
 
@@ -17,7 +19,8 @@ public class powerUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.down * _powerUpSpeed * Time.deltaTime);
+        transform.Translate(Vector3.down * _powerUpSpeed * Time.deltaTime, Space.World);
+        if (powerupID == 3) this.transform.Rotate(Vector3.forward, _rotateSpeed * Time.deltaTime, Space.Self);
 
         if (transform.position.y < -5.5f)
         {
@@ -42,6 +45,9 @@ public class powerUp : MonoBehaviour
                         break;
                     case 2:
                         collision.GetComponent<Player>().powerUp_Shield();
+                        break;
+                    case 3:
+                        collision.GetComponent<Player>().powerUp_Ammo();
                         break;
                     default:
                         Debug.Log("no powerup");
