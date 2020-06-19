@@ -49,7 +49,7 @@ public class spwanManager : MonoBehaviour
         {
             yield return new WaitForSeconds(Random.Range(5.0f, 10.0f));
             Vector3 spawnpoint = new Vector3(Random.Range(-8.0f, 8.0f), 7.5f, 0);
-            int randomPowerup = Random.Range(0, 4);
+            int randomPowerup = Random.Range(0, 5);
             Instantiate(_PowerUpPrefab[randomPowerup], spawnpoint, Quaternion.identity);
         }
     }

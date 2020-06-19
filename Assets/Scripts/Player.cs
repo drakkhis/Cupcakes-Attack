@@ -7,8 +7,9 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     // Player Variables
+    private int _health;
     [SerializeField]
-    private int _health = 3;
+    private int _max_health;
     [SerializeField]
     private float _speed = 3.5f;
     [SerializeField]
@@ -55,6 +56,7 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        _health = _max_health;
         _playerControls = new PlayerInputActions();
         _buttonControl = (ButtonControl)_playerControls.player.trusters.controls[0];
     }
@@ -188,6 +190,15 @@ public class Player : MonoBehaviour
     {
         _ammo += 5;
         _uiManager.SetAmmo(_ammo);
+    }
+
+    public void powerUp_Health()
+    {
+        if (_health < _max_health)
+        {
+            _health++;
+            _uiManager.UpdateLives(_health);
+        }
     }
 
     private IEnumerator TrippleShotTimer()
