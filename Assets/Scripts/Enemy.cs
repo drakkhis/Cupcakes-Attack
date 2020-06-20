@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,7 +17,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private GameObject _EnemylaserPrefab;
     private bool active = true;
-
+    private float _centerLine;
+    private bool bounceLeft;
     void SetInActive()
     {
         _collider2D.enabled = false;
@@ -43,6 +45,7 @@ public class Enemy : MonoBehaviour
         _Animator = gameObject.GetComponent<Animator>();
         _collider2D = GetComponent<Collider2D>();
         _audioSource = GetComponent<AudioSource>();
+        _centerLine = transform.position.x;
         if (_player == null)
         {
             Debug.LogError("Player is NULL");
@@ -57,13 +60,37 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
 
-        if (transform.position.y < -5.5f)
+        enemyMovement();
+
+    }
+
+    private void enemyMovement()
+    {
+        transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
+        if (transform.position.x > (_centerLine - 5.0f) && bounceLeft == false)
         {
-            transform.position = new Vector3(Random.Range(-8.0f, 8.0f), 7.5f, 0);
+            transform.Translate(Vector3.left * _enemySpeed * Time.deltaTime);
+        }
+        else
+        {
+            bounceLeft = true;
         }
 
+        if (transform.position.x < (_centerLine + 5.0f) && bounceLeft == true)
+        {
+            transform.Translate(Vector3.right * _enemySpeed * Time.deltaTime);
+        }
+        else
+        {
+            bounceLeft = false;
+        }
+
+        if (transform.position.y < -22.0f)
+        {
+            _centerLine = UnityEngine.Random.Range(-18.0f, 18.0f);
+            transform.position = new Vector3(_centerLine, 10f, 0);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -92,7 +119,7 @@ public class Enemy : MonoBehaviour
     {
         while (active == true)
         {
-            yield return new WaitForSeconds(Random.Range(2.0f, 5.0f));
+            yield return new WaitForSeconds(UnityEngine.Random.Range(2.0f, 5.0f));
             if (active == true)
             {
                 Vector3 offset = new Vector3(0, -1.05f, 0);

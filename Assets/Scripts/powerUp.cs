@@ -22,7 +22,7 @@ public class powerUp : MonoBehaviour
         transform.Translate(Vector3.down * _powerUpSpeed * Time.deltaTime, Space.World);
         if (powerupID == 3) this.transform.Rotate(Vector3.forward, _rotateSpeed * Time.deltaTime, Space.Self);
 
-        if (transform.position.y < -5.5f)
+        if (transform.position.y < -22.0f)
         {
             Destroy(this.gameObject);
         }

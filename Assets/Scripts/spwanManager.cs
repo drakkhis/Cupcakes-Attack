@@ -48,7 +48,7 @@ public class spwanManager : MonoBehaviour
         while (active == true)
         {
             yield return new WaitForSeconds(Random.Range(5.0f, 10.0f));
-            Vector3 spawnpoint = new Vector3(Random.Range(-8.0f, 8.0f), 7.5f, 0);
+            Vector3 spawnpoint = new Vector3(Random.Range(-18.0f, 18.0f), 9.7f, 0);
             int randomPowerup = 0;
             float randPercent = Random.Range(0f, 100f);
             if (randPercent > 95f) // 5%

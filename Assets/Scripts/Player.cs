@@ -360,18 +360,18 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x, 0, 0);
         }
-        else if (transform.position.y <= -3.8f)
+        else if (transform.position.y <= -11.0f)
         {
-            transform.position = new Vector3(transform.position.x, -3.8f, 0);
+            transform.position = new Vector3(transform.position.x, -11.0f, 0);
         }
 
-        if (transform.position.x > 11.3f)
+        if (transform.position.x > 21.0)
         {
-            transform.position = new Vector3(-11.3f, transform.position.y, 0);
+            transform.position = new Vector3(-21.0f, transform.position.y, 0);
         }
-        else if (transform.position.x < -11.3f)
+        else if (transform.position.x < -21.0f)
         {
-            transform.position = new Vector3(11.3f, transform.position.y, 0);
+            transform.position = new Vector3(21.0f, transform.position.y, 0);
         }
     }
 }
