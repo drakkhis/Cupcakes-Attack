@@ -14,11 +14,13 @@ public class Enemy : MonoBehaviour
     private Animator _Animator;
     private Collider2D _collider2D;
     private AudioSource _audioSource;
+    private spawnManager _spawnManager;
     [SerializeField]
     private GameObject _EnemylaserPrefab;
     private bool active = true;
     private float _centerLine;
     private bool bounceLeft;
+    private int _curWave;
     void SetInActive()
     {
         _collider2D.enabled = false;
@@ -45,6 +47,7 @@ public class Enemy : MonoBehaviour
         _Animator = gameObject.GetComponent<Animator>();
         _collider2D = GetComponent<Collider2D>();
         _audioSource = GetComponent<AudioSource>();
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<spawnManager>();
         _centerLine = transform.position.x;
         if (_player == null)
         {
@@ -54,6 +57,20 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("Animator is NULL");
         }
+        if (_spawnManager == null)
+        {
+            Debug.LogError("Spawn_Manager is NULL");
+        }
+        if (_collider2D == null)
+        {
+            Debug.LogError("Collider2D is NULL");
+        }
+        if (_audioSource == null)
+        {
+            Debug.LogError("AudioSource is NULL");
+        }
+        _curWave = _spawnManager.CurWave();
+
         StartCoroutine(shootEnemyLaser());
     }
 
@@ -67,10 +84,11 @@ public class Enemy : MonoBehaviour
 
     private void enemyMovement()
     {
-        transform.Translate(Vector3.down * _enemySpeed * Time.deltaTime);
+        float wave_speed = _enemySpeed + _curWave;
+        transform.Translate(Vector3.down * wave_speed * Time.deltaTime);
         if (transform.position.x > (_centerLine - 5.0f) && bounceLeft == false)
         {
-            transform.Translate(Vector3.left * _enemySpeed * Time.deltaTime);
+            transform.Translate(Vector3.left * wave_speed * Time.deltaTime);
         }
         else
         {
@@ -79,7 +97,7 @@ public class Enemy : MonoBehaviour
 
         if (transform.position.x < (_centerLine + 5.0f) && bounceLeft == true)
         {
-            transform.Translate(Vector3.right * _enemySpeed * Time.deltaTime);
+            transform.Translate(Vector3.right * wave_speed * Time.deltaTime);
         }
         else
         {
@@ -130,6 +148,7 @@ public class Enemy : MonoBehaviour
     }
     private void OnEnemyDeath()
     {
+        _spawnManager.EnemyDestroyed();
         _enemySpeed = 0;
         active = false;
         _audioSource.Play();

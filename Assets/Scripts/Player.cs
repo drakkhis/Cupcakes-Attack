@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
     private Color _color_Red = new Color(1f, 0.1072823f, 0f, 1f);
     private PlayerInputActions _playerControls;
     private ButtonControl _buttonControl;
-    private spwanManager _spawnManager;
+    private spawnManager _spawnManager;
     private int _score;
     private UIManager _uiManager;
     [SerializeField]
@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
         _health = _max_health;
         _shieldObj = transform.Find("Shields").gameObject;
         _shieldObj.SetActive(false);
-        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<spwanManager>();
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<spawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
         _thrustspeed = _speed * 2;
@@ -294,6 +294,7 @@ public class Player : MonoBehaviour
             if (_health < 1)
             {
                 _spawnManager.onPlayerDeath();
+                _spawnManager.Explode(transform.position);
                 InputSystem.ResetHaptics();
                 Destroy(this.gameObject);
             }

@@ -8,12 +8,12 @@ public class KittyHead : MonoBehaviour
     private float _rotateSpeed = 3.0f;
     [SerializeField]
     private GameObject _explosionPrefab;
-    private spwanManager _spawnManager;
+    private spawnManager _spawnManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<spwanManager>();
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<spawnManager>();
         
     }
 
@@ -28,9 +28,8 @@ public class KittyHead : MonoBehaviour
         if (other.gameObject.CompareTag("Laser"))
         {
             Destroy(other.gameObject);
-            GameObject _explosion = Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+            _spawnManager.Explode(transform.position);
             _spawnManager.StartSpawning();
-            Destroy(_explosion, 3.0f);
             Destroy(gameObject, 0.25f);
         }
     }
