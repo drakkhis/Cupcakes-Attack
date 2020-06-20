@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DigitalRuby.LightningBolt;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
@@ -9,7 +10,7 @@ public class Player : MonoBehaviour
     // Player Variables
     private int _health;
     [SerializeField]
-    private int _max_health;
+    private int _max_health = 3;
     [SerializeField]
     private float _speed = 3.5f;
     [SerializeField]
@@ -34,6 +35,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private bool _trippleShot = false;
     [SerializeField]
+    private bool _lightningShot = false;
+    [SerializeField]
     private GameObject _trippleShotPrefab;
     [SerializeField]
     private int _shields = 0;
@@ -56,7 +59,6 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        _health = _max_health;
         _playerControls = new PlayerInputActions();
         _buttonControl = (ButtonControl)_playerControls.player.trusters.controls[0];
     }
@@ -71,6 +73,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
+        _health = _max_health;
         _shieldObj = transform.Find("Shields").gameObject;
         _shieldObj.SetActive(false);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<spwanManager>();
@@ -107,6 +110,11 @@ public class Player : MonoBehaviour
                 shootLaser();
             }
 
+            if (_lightningShot == true)
+            {
+                this.GetComponentInChildren<LightningBoltScript>().Trigger();
+            }
+            
             if (_playerControls.player.trusters.ReadValue<float>() > 0 && _thrusterTime > 0f)
             {
                 if (_thrusters == false && _thrusterTime < 10f)
@@ -168,6 +176,16 @@ public class Player : MonoBehaviour
         StartCoroutine(TrippleShotTimer());
     }
 
+    public void powerUp_LightningShot()
+    {
+        if (_lightningShot == true)
+        {
+            StopCoroutine(LightningShotTimer());
+        }
+        _lightningShot = true;
+        StartCoroutine(LightningShotTimer());
+    }
+
     public void powerUp_Speed()
     {
         if (_speedBoost == true)
@@ -205,6 +223,12 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5.0f);
         _trippleShot = false;
+    }
+
+    private IEnumerator LightningShotTimer()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _lightningShot = false;
     }
 
     private IEnumerator SpeedTimer()
@@ -279,11 +303,17 @@ public class Player : MonoBehaviour
                 //Vector3 offset = new Vector3(0, 0, 0);
                 Instantiate(_trippleShotPrefab, transform.position, Quaternion.identity);
             }
+            else if (_lightningShot == true)
+            {
+
+                this.GetComponentInChildren<LightningBoltScript>().Shoot();
+            }
             else
             {
                 Vector3 offset = new Vector3(0, 1.05f, 0);
                 Instantiate(_laserPrefab, transform.position + offset, Quaternion.identity);
             }
+
         }
     }
 

@@ -49,7 +49,37 @@ public class spwanManager : MonoBehaviour
         {
             yield return new WaitForSeconds(Random.Range(5.0f, 10.0f));
             Vector3 spawnpoint = new Vector3(Random.Range(-8.0f, 8.0f), 7.5f, 0);
-            int randomPowerup = Random.Range(0, 5);
+            int randomPowerup = 0;
+            float randPercent = Random.Range(0f, 100f);
+            if (randPercent > 95f) // 5%
+            {
+                randomPowerup = 5; //Lightning Shot
+                
+            }
+            else if (randPercent > 80f) // 15%
+            {
+                randomPowerup = 4; //Health
+            }
+            else if (randPercent > 50f) // 30%
+            {
+                randomPowerup = 3; //Ammo
+            }
+            else if (randPercent > 30f) // 20%
+            {
+                randomPowerup = 2; //Shield
+            }
+            else if (randPercent > 10f) // 20%
+            {
+                randomPowerup = 1; //Speed
+            }
+            else if (randPercent > 0f) // 10%
+            {
+                randomPowerup = 0; //Tripple Shot
+            }
+            else
+            {
+                randomPowerup = 4;
+            }
             Instantiate(_PowerUpPrefab[randomPowerup], spawnpoint, Quaternion.identity);
         }
     }

@@ -12,7 +12,7 @@ public class Laser : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.up * _laserSpeed * Time.deltaTime);
+        transform.Translate(Vector3.up * _laserSpeed * Time.deltaTime, Space.Self);
         if (transform.position.y > 8)
         {
             if (this.transform.parent != null)

@@ -52,6 +52,9 @@ public class powerUp : MonoBehaviour
                     case 4:
                         collision.GetComponent<Player>().powerUp_Health();
                         break;
+                    case 5:
+                        collision.GetComponent<Player>().powerUp_LightningShot();
+                        break;
                     default:
                         Debug.Log("no powerup");
                         break;
