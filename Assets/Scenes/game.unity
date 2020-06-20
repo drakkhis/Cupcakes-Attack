@@ -1532,6 +1532,7 @@ MonoBehaviour:
   _boostSpeed: 8.5
   _thrusterEffect: {fileID: 1433480572}
   _thrusterBar: {fileID: 364128370}
+  _ammoMax: 15
   _ammo: 15
   _laserPrefab: {fileID: 7006875633204077563, guid: da86fd3ac58de7b4baa602090a3d5e83,
     type: 3}
@@ -3151,8 +3152,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000028372, y: -0.000012875}
-  m_SizeDelta: {x: 68.049416, y: 68.682526}
+  m_AnchoredPosition: {x: -0.5, y: -5.01}
+  m_SizeDelta: {x: 42.327393, y: 33.94097}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1365891521
 MonoBehaviour:
@@ -3186,7 +3187,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: 0/15
 --- !u!222 &1365891522
 CanvasRenderer:
   m_ObjectHideFlags: 0

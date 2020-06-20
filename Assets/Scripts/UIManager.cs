@@ -46,9 +46,9 @@ public class UIManager : MonoBehaviour
         scoreText.text = "Score: " + points;
     }
 
-    public void SetAmmo(int points)
+    public void SetAmmo(int points,int max)
     {
-        ammoText.text = "" + points;
+        ammoText.text = points + "/" + max;
     }
 
     public void UpdateLives(int currentlives)

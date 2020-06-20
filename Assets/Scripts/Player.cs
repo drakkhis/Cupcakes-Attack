@@ -28,6 +28,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Image _thrusterBar;
     [SerializeField]
+    private int _ammoMax = 15;
+    [SerializeField]
     private int _ammo = 15;
     [SerializeField]
     private GameObject _laserPrefab;
@@ -84,7 +86,8 @@ public class Player : MonoBehaviour
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
         _thrustspeed = _speed * 2;
-        _uiManager.SetAmmo(_ammo);
+        _ammo = _ammoMax;
+        _uiManager.SetAmmo(_ammo, _ammoMax);
         if (_spawnManager == null)
         {
             Debug.LogError("Spawn Manager is null");
@@ -211,7 +214,8 @@ public class Player : MonoBehaviour
     public void powerUp_Ammo()
     {
         _ammo += 5;
-        _uiManager.SetAmmo(_ammo);
+        if (_ammo > _ammoMax) _ammo = _ammoMax;
+        _uiManager.SetAmmo(_ammo, _ammoMax);
     }
 
     public void powerUp_Health()
@@ -308,7 +312,7 @@ public class Player : MonoBehaviour
         if (_ammo > 0)
         {
             --_ammo;
-            _uiManager.SetAmmo(_ammo);
+            _uiManager.SetAmmo(_ammo, _ammoMax);
             _audioSource.Play();
             _canFire = Time.time + _laserCoolDown;
 
