@@ -8,6 +8,10 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     // Player Variables
+    [SerializeField]
+    private float shakeTime = 0.5f;
+    [SerializeField]
+    private float shakeAmount = 0.1f;
     private int _health;
     [SerializeField]
     private int _max_health = 3;
@@ -41,7 +45,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _shields = 0;
     private GameObject _shieldObj;
-    private Color _color_Green = new Color(0f,1f,0.1039953f,1f);
+    private Color _color_Green = new Color(0f, 1f, 0.1039953f, 1f);
     private Color _color_Yellow = new Color(1f, 0.8287185f, 0f, 1f);
     private Color _color_Red = new Color(1f, 0.1072823f, 0f, 1f);
     private PlayerInputActions _playerControls;
@@ -114,7 +118,7 @@ public class Player : MonoBehaviour
             {
                 this.GetComponentInChildren<LightningBoltScript>().Trigger();
             }
-            
+
             if (_playerControls.player.trusters.ReadValue<float>() > 0 && _thrusterTime > 0f)
             {
                 if (_thrusters == false && _thrusterTime < 10f)
@@ -125,7 +129,7 @@ public class Player : MonoBehaviour
                 {
                     ThrustersPressed();
                 }
-                
+
             }
             else
             {
@@ -144,9 +148,9 @@ public class Player : MonoBehaviour
     {
         _thrusters = true;
         _thrusterTime -= Time.deltaTime;
-        _thrusterBar.fillAmount = _thrusterTime/10;
+        _thrusterBar.fillAmount = _thrusterTime / 10;
         if (_thrusterEffect.activeSelf != true)
-        _thrusterEffect.SetActive(true);
+            _thrusterEffect.SetActive(true);
     }
 
     void ThrustersNotPressed()
@@ -157,7 +161,7 @@ public class Player : MonoBehaviour
             if (_thrusterEffect.activeSelf != false)
                 _thrusterEffect.SetActive(false);
             _thrusterTime += Time.deltaTime;
-            _thrusterBar.fillAmount = _thrusterTime/10;
+            _thrusterBar.fillAmount = _thrusterTime / 10;
         }
         else
         {
@@ -251,7 +255,7 @@ public class Player : MonoBehaviour
         if (_shields != 0)
         {
             _shields--;
-            switch(_shields)
+            switch (_shields)
             {
                 case 2:
                     _shieldObj.GetComponent<SpriteRenderer>().color = _color_Yellow;
@@ -266,6 +270,8 @@ public class Player : MonoBehaviour
         }
         else
         {
+            CameraShake.Shake(shakeTime, shakeAmount);
+            StartCoroutine(Controlerrumble());
             _health--;
             if (_health == 2)
             {
@@ -284,9 +290,17 @@ public class Player : MonoBehaviour
             if (_health < 1)
             {
                 _spawnManager.onPlayerDeath();
+                InputSystem.ResetHaptics();
                 Destroy(this.gameObject);
             }
         }
+    }
+
+    IEnumerator Controlerrumble()
+    {
+        Gamepad.current.SetMotorSpeeds(0.25f, 0.75f);
+        yield return new WaitForSeconds(shakeTime);
+        InputSystem.ResetHaptics();
     }
 
     void shootLaser()
