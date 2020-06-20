@@ -1,4 +1,5 @@
 ﻿using DigitalRuby.LightningBolt;
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -61,6 +62,7 @@ public class Player : MonoBehaviour
     private GameObject _leftWing;
     private AudioSource _audioSource;
     bool _isPressed = false;
+    private bool _neg_Powerup_Brain = false;
     // Start is called before the first frame update
 
     private void Awake()
@@ -227,6 +229,18 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void Neg_Powerup_Brain()
+    {
+        _neg_Powerup_Brain = true;
+        StartCoroutine(negBrainTimer());
+    }
+
+    private IEnumerator negBrainTimer()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _neg_Powerup_Brain = false;
+    }
+
     private IEnumerator TrippleShotTimer()
     {
         yield return new WaitForSeconds(5.0f);
@@ -359,7 +373,14 @@ public class Player : MonoBehaviour
         }
 
         var moveDirection = _playerControls.player.movement.ReadValue<Vector2>();
-        transform.Translate(moveDirection * _runSpeed * Time.deltaTime);
+        if (_neg_Powerup_Brain == true)
+        {
+            transform.Translate(-moveDirection * _runSpeed * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(moveDirection * _runSpeed * Time.deltaTime);
+        }
 
         if (transform.position.y >= 0)
         {

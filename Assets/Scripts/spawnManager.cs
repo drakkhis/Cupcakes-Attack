@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class spawnManager : MonoBehaviour
 {
@@ -11,6 +13,8 @@ public class spawnManager : MonoBehaviour
     private GameObject _enemyPrefab;
     [SerializeField]
     private GameObject[] _PowerUpPrefab;
+    [SerializeField]
+    private int[] _PowerupWeight;
     [SerializeField]
     private GameObject _enemyContainer;
     private bool active = true;
@@ -132,6 +136,23 @@ public class spawnManager : MonoBehaviour
         _waveTextObj.SetActive(false);
     }
 
+
+    private GameObject RandomItem(GameObject[] repfabs, int[] weights)
+    {
+        if (repfabs?.Length > 0 && repfabs?.Length == weights?.Length)
+        {
+            var total = 0f;
+            var roll = Random.Range(0, weights.Sum());
+            for (var i = 0; i < weights.Length; i++)
+            {
+                total += weights[i];
+                if (roll < total)
+                    return repfabs[i];
+            }
+        }
+        return repfabs[Random.Range(0, repfabs.Length)];
+    }
+
     IEnumerator spawnPowerUpControl()
     {
         yield return new WaitForSeconds(3.0f);
@@ -139,38 +160,18 @@ public class spawnManager : MonoBehaviour
         {
             yield return new WaitForSeconds(UnityEngine.Random.Range(5.0f, 10.0f));
             Vector3 spawnpoint = new Vector3(UnityEngine.Random.Range(-18.0f, 18.0f), 9.7f, 0);
-            int randomPowerup = 0;
-            float randPercent = UnityEngine.Random.Range(0f, 100f);
-            if (randPercent > 95f) // 5%
+            GameObject randomPowerup = RandomItem(_PowerUpPrefab, _PowerupWeight);
+            GameObject InstPowerUp = Instantiate(randomPowerup, spawnpoint, Quaternion.identity);
+            int index = 0;
+            for (int i = 0; i < _PowerUpPrefab.Length; i++)
             {
-                randomPowerup = 5; //Lightning Shot
-                
+                if (_PowerUpPrefab[i] == randomPowerup)
+                {
+                    index = i;
+                    break;
+                }
             }
-            else if (randPercent > 80f) // 15%
-            {
-                randomPowerup = 4; //Health
-            }
-            else if (randPercent > 50f) // 30%
-            {
-                randomPowerup = 3; //Ammo
-            }
-            else if (randPercent > 30f) // 20%
-            {
-                randomPowerup = 2; //Shield
-            }
-            else if (randPercent > 10f) // 20%
-            {
-                randomPowerup = 1; //Speed
-            }
-            else if (randPercent > 0f) // 10%
-            {
-                randomPowerup = 0; //Tripple Shot
-            }
-            else
-            {
-                randomPowerup = 4;
-            }
-            Instantiate(_PowerUpPrefab[randomPowerup], spawnpoint, Quaternion.identity);
+            InstPowerUp.GetComponent<powerUp>().SetPowerupID(index);
         }
     }
 

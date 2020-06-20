@@ -6,7 +6,6 @@ public class powerUp : MonoBehaviour
 {
     [SerializeField]
     private float _powerUpSpeed = 3.0f;
-    [SerializeField]
     private int powerupID;
     [SerializeField]
     private GameObject _audioPrefab;
@@ -26,6 +25,11 @@ public class powerUp : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+
+    public void SetPowerupID(int ID)
+    {
+        powerupID = ID;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -54,6 +58,9 @@ public class powerUp : MonoBehaviour
                         break;
                     case 5:
                         collision.GetComponent<Player>().powerUp_LightningShot();
+                        break;
+                    case 6:
+                        collision.GetComponent<Player>().Neg_Powerup_Brain();
                         break;
                     default:
                         Debug.Log("no powerup");
