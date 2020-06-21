@@ -48,7 +48,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""name"": ""WASD"",
                     ""id"": ""d16457cd-2675-42ba-93fe-ea05d70ea471"",
                     ""path"": ""2DVector"",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""movement"",
@@ -103,7 +103,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""name"": ""arrows"",
                     ""id"": ""9bb681c1-2afc-4d81-ab35-0a6706120a92"",
                     ""path"": ""2DVector"",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""movement"",
@@ -158,7 +158,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""name"": ""gamepad"",
                     ""id"": ""234b5c74-5fc8-4cdc-9eab-9aa69a8b78fe"",
                     ""path"": ""2DVector"",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""movement"",
@@ -171,7 +171,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/leftStick/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""gamepad"",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -182,7 +182,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/leftStick/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""gamepad"",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -193,7 +193,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/leftStick/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""gamepad"",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -204,7 +204,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""path"": ""<Gamepad>/leftStick/right"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""gamepad"",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""movement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -234,21 +234,10 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1b75af14-ea2d-4b12-b43e-f9b15236be75"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": ""Press"",
-                    ""processors"": """",
-                    ""groups"": ""gamepad"",
-                    ""action"": ""fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d8e6b5d4-2f4b-4e9b-90b9-4e03884e5fc8"",
                     ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
-                    ""groups"": ""gamepad"",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""fire"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -257,7 +246,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""361222f7-20d9-43b3-9aeb-fdc956a11d8b"",
                     ""path"": ""<Keyboard>/leftShift"",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""trusters"",
@@ -266,11 +255,11 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8550de23-bf2a-4f2c-aefe-0f5f21f7b3bb"",
+                    ""id"": ""b5736e07-d9a5-40fd-82e4-58c3e3186f35"",
                     ""path"": ""<Gamepad>/leftShoulder"",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": ""gamepad"",
+                    ""groups"": ""Gamepad"",
                     ""action"": ""trusters"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -291,8 +280,8 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
             ]
         },
         {
-            ""name"": ""gamepad"",
-            ""bindingGroup"": ""gamepad"",
+            ""name"": ""Gamepad"",
+            ""bindingGroup"": ""Gamepad"",
             ""devices"": [
                 {
                     ""devicePath"": ""<Gamepad>"",
@@ -411,13 +400,13 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
             return asset.controlSchemes[m_KeyboardSchemeIndex];
         }
     }
-    private int m_gamepadSchemeIndex = -1;
-    public InputControlScheme gamepadScheme
+    private int m_GamepadSchemeIndex = -1;
+    public InputControlScheme GamepadScheme
     {
         get
         {
-            if (m_gamepadSchemeIndex == -1) m_gamepadSchemeIndex = asset.FindControlSchemeIndex("gamepad");
-            return asset.controlSchemes[m_gamepadSchemeIndex];
+            if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.FindControlSchemeIndex("Gamepad");
+            return asset.controlSchemes[m_GamepadSchemeIndex];
         }
     }
     public interface IPlayerActions

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Users;
+[RequireComponent(typeof(PlayerInput))]
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
@@ -21,6 +23,28 @@ public class UIManager : MonoBehaviour
     private bool _gameOverBool = false;
     private gameManager _gameManager;
 
+    [SerializeField]
+    private Image pauseImage;
+    [SerializeField]
+    private Image fireImage;
+    [SerializeField]
+    private Image thrusterImage;
+    [SerializeField]
+    private Image pauseImage1;
+    [SerializeField]
+    private Image fireImage1;
+    [SerializeField]
+    private Image thrusterImage1;
+
+    // refs to your sprites
+    public Sprite gamepadPauseImage;
+    public Sprite keyboardPauseImage;
+    public Sprite gamepadFireImage;
+    public Sprite keyboardFireImage;
+    public Sprite gamepadThrusterImage;
+    public Sprite keyboardThrusterImage;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,10 +59,23 @@ public class UIManager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
 
+    public void updateButtonImage(string schemeName)
+    {
+        // assuming you have only 2 schemes: keyboard and gamepad
+        if (schemeName.Equals("Keyboard"))
+        {
+            pauseImage.sprite = keyboardPauseImage;
+            fireImage.sprite = keyboardFireImage;
+            thrusterImage.sprite = keyboardThrusterImage;
+
+        }
+        else if (schemeName.Equals("Gamepad"))
+        {
+            pauseImage.sprite = gamepadPauseImage;
+            fireImage.sprite = gamepadFireImage;
+            thrusterImage.sprite = gamepadThrusterImage;
+        }
     }
 
     public void AddScore(int points)

@@ -1,0 +1,237 @@
+@font-face {
+  font-family: 'Keyboard-Icons';
+  src:  url('fonts/Keyboard-Icons.eot?m8ai1w');
+  src:  url('fonts/Keyboard-Icons.eot?m8ai1w#iefix') format('embedded-opentype'),
+    url('fonts/Keyboard-Icons.ttf?m8ai1w') format('truetype'),
+    url('fonts/Keyboard-Icons.woff?m8ai1w') format('woff'),
+    url('fonts/Keyboard-Icons.svg?m8ai1w#Keyboard-Icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'Keyboard-Icons' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-Keyboard-Icons-11:before {
+  content: "\58";
+}
+.icon-Keyboard-Icons-01:before {
+  content: "\43";
+}
+.icon-Keyboard-Icons-02:before {
+  content: "\56";
+}
+.icon-Keyboard-Icons-03:before {
+  content: "\46";
+}
+.icon-Keyboard-Icons-04:before {
+  content: "\4c";
+}
+.icon-Keyboard-Icons-05:before {
+  content: "\4e";
+}
+.icon-Keyboard-Icons-06:before {
+  content: "\42";
+}
+.icon-Keyboard-Icons-07:before {
+  content: "\57";
+}
+.icon-Keyboard-Icons-08:before {
+  content: "\53";
+}
+.icon-Keyboard-Icons-09:before {
+  content: "\41";
+}
+.icon-Keyboard-Icons-10:before {
+  content: "\44";
+}
+.icon-Keyboard-Icons-12:before {
+  content: "\21";
+}
+.icon-Keyboard-Icons-13:before {
+  content: "\22";
+}
+.icon-Keyboard-Icons-14:before {
+  content: "\b7";
+}
+.icon-Keyboard-Icons-15:before {
+  content: "\24";
+}
+.icon-Keyboard-Icons-16:before {
+  content: "\25";
+}
+.icon-Keyboard-Icons-17:before {
+  content: "\26";
+}
+.icon-Keyboard-Icons-18:before {
+  content: "\2f";
+}
+.icon-Keyboard-Icons-19:before {
+  content: "\28";
+}
+.icon-Keyboard-Icons-20:before {
+  content: "\29";
+}
+.icon-Keyboard-Icons-21:before {
+  content: "\3d";
+}
+.icon-Keyboard-Icons-22:before {
+  content: "\3f";
+}
+.icon-Keyboard-Icons-23:before {
+  content: "\bf";
+}
+.icon-Keyboard-Icons-24:before {
+  content: "\31";
+}
+.icon-Keyboard-Icons-25:before {
+  content: "\32";
+}
+.icon-Keyboard-Icons-26:before {
+  content: "\33";
+}
+.icon-Keyboard-Icons-27:before {
+  content: "\34";
+}
+.icon-Keyboard-Icons-28:before {
+  content: "\35";
+}
+.icon-Keyboard-Icons-29:before {
+  content: "\36";
+}
+.icon-Keyboard-Icons-30:before {
+  content: "\37";
+}
+.icon-Keyboard-Icons-31:before {
+  content: "\38";
+}
+.icon-Keyboard-Icons-32:before {
+  content: "\39";
+}
+.icon-Keyboard-Icons-33:before {
+  content: "\30";
+}
+.icon-Keyboard-Icons-34:before {
+  content: "\61";
+}
+.icon-Keyboard-Icons-35:before {
+  content: "\62";
+}
+.icon-Keyboard-Icons-36:before {
+  content: "\63";
+}
+.icon-Keyboard-Icons-37:before {
+  content: "\64";
+}
+.icon-Keyboard-Icons-38:before {
+  content: "\65";
+}
+.icon-Keyboard-Icons-39:before {
+  content: "\66";
+}
+.icon-Keyboard-Icons-40:before {
+  content: "\67";
+}
+.icon-Keyboard-Icons-41:before {
+  content: "\68";
+}
+.icon-Keyboard-Icons-42:before {
+  content: "\69";
+}
+.icon-Keyboard-Icons-43:before {
+  content: "\6a";
+}
+.icon-Keyboard-Icons-44:before {
+  content: "\6b";
+}
+.icon-Keyboard-Icons-45:before {
+  content: "\6c";
+}
+.icon-Keyboard-Icons-46:before {
+  content: "\6d";
+}
+.icon-Keyboard-Icons-47:before {
+  content: "\6e";
+}
+.icon-Keyboard-Icons-48:before {
+  content: "\6f";
+}
+.icon-Keyboard-Icons-49:before {
+  content: "\70";
+}
+.icon-Keyboard-Icons-50:before {
+  content: "\71";
+}
+.icon-Keyboard-Icons-51:before {
+  content: "\72";
+}
+.icon-Keyboard-Icons-52:before {
+  content: "\73";
+}
+.icon-Keyboard-Icons-53:before {
+  content: "\74";
+}
+.icon-Keyboard-Icons-54:before {
+  content: "\75";
+}
+.icon-Keyboard-Icons-55:before {
+  content: "\76";
+}
+.icon-Keyboard-Icons-56:before {
+  content: "\77";
+}
+.icon-Keyboard-Icons-57:before {
+  content: "\78";
+}
+.icon-Keyboard-Icons-58:before {
+  content: "\79";
+}
+.icon-Keyboard-Icons-59:before {
+  content: "\7a";
+}
+.icon-Keyboard-Icons-60:before {
+  content: "\2b";
+}
+.icon-Keyboard-Icons-61:before {
+  content: "\2d";
+}
+.icon-Keyboard-Icons-62:before {
+  content: "\2a";
+}
+.icon-Keyboard-Icons-63:before {
+  content: "\5c";
+}
+.icon-Keyboard-Icons-64:before {
+  content: "\47";
+}
+.icon-Keyboard-Icons-65:before {
+  content: "\48";
+}
+.icon-Keyboard-Icons-66:before {
+  content: "\49";
+}
+.icon-Keyboard-Icons-67:before {
+  content: "\55";
+}
+.icon-Keyboard-Icons-68:before {
+  content: "\50";
+}
+.icon-Keyboard-Icons-69:before {
+  content: "\45";
+}
+.icon-Keyboard-Icons-70:before {
+  content: "\51";
+}
+

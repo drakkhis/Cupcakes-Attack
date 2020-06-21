@@ -4,9 +4,10 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
+using UnityEngine.InputSystem.Users;
 using UnityEngine.UI;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
 {
     // Player Variables
     [SerializeField]
@@ -61,23 +62,30 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _leftWing;
     private AudioSource _audioSource;
-    bool _isPressed = false;
+    float _isPressed = 0;
     private bool _neg_Powerup_Brain = false;
+    Vector2 moveDirection;
+
     // Start is called before the first frame update
 
     private void Awake()
     {
         _playerControls = new PlayerInputActions();
+        _playerControls.player.SetCallbacks(this);
         _buttonControl = (ButtonControl)_playerControls.player.trusters.controls[0];
     }
     private void OnEnable()
     {
-        _playerControls.Enable();
+        _playerControls.player.Enable();
+
     }
     private void OnDisable()
     {
-        _playerControls.Disable();
+        _playerControls.player.Disable();
+
     }
+
+
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
@@ -112,19 +120,10 @@ public class Player : MonoBehaviour
     void Update()
     {
         calculateMovement();
+
         if (Time.timeScale != 0)
         {
-            if (_playerControls.player.fire.triggered && Time.time > _canFire)
-            {
-                shootLaser();
-            }
-
-            if (_lightningShot == true)
-            {
-                this.GetComponentInChildren<LightningBoltScript>().Trigger();
-            }
-
-            if (_playerControls.player.trusters.ReadValue<float>() > 0 && _thrusterTime > 0f)
+            if (_isPressed > 0 && _thrusterTime > 0f)
             {
                 if (_thrusters == false && _thrusterTime < 10f)
                 {
@@ -141,11 +140,12 @@ public class Player : MonoBehaviour
                 ThrustersNotPressed();
             }
         }
-    }
 
-    void ThrustersButtonPressed()
-    {
-        _isPressed = !_isPressed;
+        if (_lightningShot == true)
+        {
+            this.GetComponentInChildren<LightningBoltScript>().Trigger();
+        }
+
     }
 
 
@@ -372,7 +372,6 @@ public class Player : MonoBehaviour
             _runSpeed += _boostSpeed;
         }
 
-        var moveDirection = _playerControls.player.movement.ReadValue<Vector2>();
         if (_neg_Powerup_Brain == true)
         {
             transform.Translate(-moveDirection * _runSpeed * Time.deltaTime);
@@ -399,5 +398,63 @@ public class Player : MonoBehaviour
         {
             transform.position = new Vector3(21.0f, transform.position.y, 0);
         }
+    }
+
+
+    public void OnMovement(InputAction.CallbackContext context)
+    {
+        var device = context.control.device;
+        var scheme = InputControlScheme.FindControlSchemeForDevice(device, context.action.actionMap.controlSchemes);
+        if (scheme.HasValue)
+        {
+            _uiManager.updateButtonImage(scheme.Value.name);
+        }
+        else
+
+        {
+            _uiManager.updateButtonImage("none");
+        }
+
+        moveDirection = context.ReadValue<Vector2>();
+    }
+
+    public void OnFire(InputAction.CallbackContext context)
+    {
+        var device = context.control.device;
+        var scheme = InputControlScheme.FindControlSchemeForDevice(device, context.action.actionMap.controlSchemes);
+        if (scheme.HasValue)
+        {
+            _uiManager.updateButtonImage(scheme.Value.name);
+        }
+        else
+
+        {
+            _uiManager.updateButtonImage("none");
+        }
+        if (Time.timeScale != 0)
+        {
+            if (context.performed && Time.time > _canFire)
+            {
+                shootLaser();
+            }
+        }
+    }
+
+    public void OnTrusters(InputAction.CallbackContext context)
+    {
+        var device = context.control.device;
+        var scheme = InputControlScheme.FindControlSchemeForDevice(device, context.action.actionMap.controlSchemes);
+        if (scheme.HasValue)
+        {
+            _uiManager.updateButtonImage(scheme.Value.name);
+        }
+        else
+
+        {
+            _uiManager.updateButtonImage("none");
+        }
+
+        _isPressed = context.ReadValue<float>();
+
     }
 }
