@@ -10,7 +10,9 @@ using Random = UnityEngine.Random;
 public class spawnManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _enemyPrefab;
+    private GameObject[] _enemyPrefab;
+    [SerializeField]
+    private int[] _EnemyWeight;
     [SerializeField]
     private GameObject[] _PowerUpPrefab;
     [SerializeField]
@@ -72,8 +74,28 @@ public class spawnManager : MonoBehaviour
                     {
                         StartCoroutine(WaveText(_curWave + 1));
                     }
-                    Vector3 spawnpoint = new Vector3(UnityEngine.Random.Range(-8.0f, 8.0f), 7.5f, 0);
-                    GameObject newEnemy = Instantiate(_enemyPrefab, spawnpoint, Quaternion.identity);
+                    Vector3 spawnpoint;
+                    GameObject randomEnemy = RandomItem(_enemyPrefab, _EnemyWeight);
+                    int index = 0;
+                    for (int i = 0; i < _enemyPrefab.Length; i++)
+                    {
+                        if (_enemyPrefab[i] == randomEnemy)
+                        {
+                            index = i;
+                            break;
+                        }
+                    }
+                    if (index == 2)
+                    {
+                        spawnpoint = new Vector3(-20f, UnityEngine.Random.Range(-10f, 10f), 0);
+                    }
+                    else
+                    {
+                        spawnpoint = new Vector3(UnityEngine.Random.Range(-18.0f, 18.0f), 7.5f, 0);
+                    }
+
+                    GameObject newEnemy = Instantiate(randomEnemy, spawnpoint, Quaternion.identity);
+                    newEnemy.GetComponent<Enemy>().SetEnemyID(index);
                     _enemies_Spwaned++;
                     newEnemy.transform.parent = _enemyContainer.transform;
                 }
@@ -91,8 +113,28 @@ public class spawnManager : MonoBehaviour
                     {
                         StartCoroutine(WaveText(_curWave + 1));
                     }
-                    Vector3 spawnpoint = new Vector3(UnityEngine.Random.Range(-8.0f, 8.0f), 7.5f, 0);
-                    GameObject newEnemy = Instantiate(_enemyPrefab, spawnpoint, Quaternion.identity);
+                    Vector3 spawnpoint;
+                    GameObject randomEnemy = RandomItem(_enemyPrefab, _EnemyWeight);
+                    int index = 0;
+                    for (int i = 0; i < _enemyPrefab.Length; i++)
+                    {
+                        if (_enemyPrefab[i] == randomEnemy)
+                        {
+                            index = i;
+                            break;
+                        }
+                    }
+                    if (index == 2)
+                    {
+                        spawnpoint = new Vector3(-20f, UnityEngine.Random.Range(-10f, 10f), 0);
+                    }
+                    else
+                    {
+                        spawnpoint = new Vector3(UnityEngine.Random.Range(-18.0f, 18.0f), 7.5f, 0);
+                    }
+                    
+                    GameObject newEnemy = Instantiate(randomEnemy, spawnpoint, Quaternion.identity);
+                    newEnemy.GetComponent<Enemy>().SetEnemyID(index);
                     _enemies_Spwaned++;
                     newEnemy.transform.parent = _enemyContainer.transform;
                 }
@@ -110,8 +152,28 @@ public class spawnManager : MonoBehaviour
                     {
                         StartCoroutine(WaveText(_curWave + 1));
                     }
-                    Vector3 spawnpoint = new Vector3(UnityEngine.Random.Range(-8.0f, 8.0f), 7.5f, 0);
-                    GameObject newEnemy = Instantiate(_enemyPrefab, spawnpoint, Quaternion.identity);
+                    Vector3 spawnpoint;
+                    GameObject randomEnemy = RandomItem(_enemyPrefab, _EnemyWeight);
+                    int index = 0;
+                    for (int i = 0; i < _enemyPrefab.Length; i++)
+                    {
+                        if (_enemyPrefab[i] == randomEnemy)
+                        {
+                            index = i;
+                            break;
+                        }
+                    }
+                    if (index == 2)
+                    {
+                        spawnpoint = new Vector3(-20f, UnityEngine.Random.Range(-10f, 10f), 0);
+                    }
+                    else
+                    {
+                        spawnpoint = new Vector3(UnityEngine.Random.Range(-18.0f, 18.0f), 7.5f, 0);
+                    }
+
+                    GameObject newEnemy = Instantiate(randomEnemy, spawnpoint, Quaternion.identity);
+                    newEnemy.GetComponent<Enemy>().SetEnemyID(index);
                     _enemies_Spwaned++;
                     newEnemy.transform.parent = _enemyContainer.transform;
                 }

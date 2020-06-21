@@ -21,12 +21,17 @@ public class Enemy : MonoBehaviour
     private float _centerLine;
     private bool bounceLeft;
     private int _curWave;
+    [SerializeField]
+    private int enemyID;
     void SetInActive()
     {
         _collider2D.enabled = false;
     }
 
-
+    public void SetEnemyID(int ID)
+    {
+        enemyID = ID;
+    }
 
     float AnimationLength(string name)
     {
@@ -84,31 +89,74 @@ public class Enemy : MonoBehaviour
 
     private void enemyMovement()
     {
-        float wave_speed = _enemySpeed + _curWave;
-        transform.Translate(Vector3.down * wave_speed * Time.deltaTime);
-        if (transform.position.x > (_centerLine - 5.0f) && bounceLeft == false)
+        float wave_speed = _enemySpeed + (_curWave * 1.5f);
+        switch (enemyID)
         {
-            transform.Translate(Vector3.left * wave_speed * Time.deltaTime);
-        }
-        else
-        {
-            bounceLeft = true;
+            case 0:
+                transform.Translate(Vector3.down * wave_speed * Time.deltaTime);
+                if (transform.position.x > (_centerLine - 5.0f) && bounceLeft == false)
+                {
+                    transform.Translate(Vector3.left * wave_speed * Time.deltaTime);
+                }
+                else
+                {
+                    bounceLeft = true;
+                }
+
+                if (transform.position.x < (_centerLine + 5.0f) && bounceLeft == true)
+                {
+                    transform.Translate(Vector3.right * wave_speed * Time.deltaTime);
+                }
+                else
+                {
+                    bounceLeft = false;
+                }
+
+                if (transform.position.y < -22.0f)
+                {
+                    _centerLine = UnityEngine.Random.Range(-18.0f, 18.0f);
+                    transform.position = new Vector3(_centerLine, 10f, 0);
+                }
+                break;
+            case 1:
+                transform.Translate(Vector3.down * wave_speed * Time.deltaTime);
+                if (transform.position.x > (_centerLine - 5.0f) && bounceLeft == false)
+                {
+                    transform.Translate(Vector3.left * wave_speed * Time.deltaTime);
+                }
+                else
+                {
+                    bounceLeft = true;
+                }
+
+                if (transform.position.x < (_centerLine + 5.0f) && bounceLeft == true)
+                {
+                    transform.Translate(Vector3.right * wave_speed * Time.deltaTime);
+                }
+                else
+                {
+                    bounceLeft = false;
+                }
+
+                if (transform.position.y < -22.0f)
+                {
+                    _centerLine = UnityEngine.Random.Range(-18.0f, 18.0f);
+                    transform.position = new Vector3(_centerLine, 10f, 0);
+                }
+                break;
+            case 2:
+                transform.Translate(Vector3.right * wave_speed * Time.deltaTime);
+
+                if (transform.position.x > 20.0f)
+                {
+                    _centerLine = UnityEngine.Random.Range(-10.0f, 10.0f);
+                    transform.position = new Vector3(-20f, _centerLine, 0);
+                }
+                break;
+            default:
+                break;
         }
 
-        if (transform.position.x < (_centerLine + 5.0f) && bounceLeft == true)
-        {
-            transform.Translate(Vector3.right * wave_speed * Time.deltaTime);
-        }
-        else
-        {
-            bounceLeft = false;
-        }
-
-        if (transform.position.y < -22.0f)
-        {
-            _centerLine = UnityEngine.Random.Range(-18.0f, 18.0f);
-            transform.position = new Vector3(_centerLine, 10f, 0);
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)

@@ -1523,8 +1523,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74799347a398d444c8674f91821655d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 6866245679098302079, guid: 48fc54e0fd2b14d4ea725e23cb034afa,
-    type: 3}
+  _enemyPrefab:
+  - {fileID: 6866245679098302079, guid: 48fc54e0fd2b14d4ea725e23cb034afa, type: 3}
+  - {fileID: 6893426090347248353, guid: 6c00e6dc44e7cbe449fe6cbb846d176c, type: 3}
+  - {fileID: 1287486941668210327, guid: c2179a3f0f95c804b84d4cbb4e325daa, type: 3}
+  _EnemyWeight: 0a000000050000000a000000
   _PowerUpPrefab:
   - {fileID: 2191976573764751392, guid: c0339a541e135574dad5453f3e3eaa77, type: 3}
   - {fileID: 3580193388567839108, guid: 89c19703ad0f4b147bcd3a5b0b1c1612, type: 3}
@@ -1533,7 +1536,7 @@ MonoBehaviour:
   - {fileID: 6116093418274196397, guid: 3145f57caf9d67348b4ffe533d9f2cd5, type: 3}
   - {fileID: 5022789444242965795, guid: c4fee09732f2f72499fbbe27c75b7171, type: 3}
   - {fileID: 2787801699957855632, guid: 4c89ec7fb07ecb5498962915a8910cf5, type: 3}
-  _PowerupWeight: 0a0000000a0000000a0000000a0000000a000000010000000a000000
+  _PowerupWeight: 0a0000000a0000000a000000140000000a000000010000000a000000
   _enemyContainer: {fileID: 753441756}
   _explosionPrefab: {fileID: 2849248968973489691, guid: 4b31df24b39bae742b8121dc5d815f6e,
     type: 3}
@@ -1715,6 +1718,7 @@ MonoBehaviour:
   _thrusterBar: {fileID: 364128370}
   _ammoMax: 15
   _ammo: 15
+  _ammoPowerupAmount: 10
   _laserPrefab: {fileID: 7006875633204077563, guid: da86fd3ac58de7b4baa602090a3d5e83,
     type: 3}
   _laserCoolDown: 0.5

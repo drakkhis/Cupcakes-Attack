@@ -34,6 +34,8 @@ public class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
     [SerializeField]
     private int _ammo = 15;
     [SerializeField]
+    private int _ammoPowerupAmount;
+    [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private float _laserCoolDown = 0.5f;
@@ -215,7 +217,7 @@ public class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
 
     public void powerUp_Ammo()
     {
-        _ammo += 5;
+        _ammo += _ammoPowerupAmount;
         if (_ammo > _ammoMax) _ammo = _ammoMax;
         _uiManager.SetAmmo(_ammo, _ammoMax);
     }
