@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditorInternal;
+﻿using System.Collections;
+using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -105,73 +102,84 @@ public class Enemy : MonoBehaviour
     private void enemyMovement()
     {
         float wave_speed = _enemySpeed + (_curWave * 1.5f);
-        switch (enemyID)
+
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 5);
+
+        if (hitColliders[0].transform.gameObject.CompareTag("Player"))
         {
-            case 0:
-                transform.Translate(Vector3.down * wave_speed * Time.deltaTime);
-                if (transform.position.x > (_centerLine - 5.0f) && bounceLeft == false)
-                {
-                    transform.Translate(Vector3.left * wave_speed * Time.deltaTime);
-                }
-                else
-                {
-                    bounceLeft = true;
-                }
-
-                if (transform.position.x < (_centerLine + 5.0f) && bounceLeft == true)
-                {
-                    transform.Translate(Vector3.right * wave_speed * Time.deltaTime);
-                }
-                else
-                {
-                    bounceLeft = false;
-                }
-
-                if (transform.position.y < -22.0f)
-                {
-                    _centerLine = UnityEngine.Random.Range(-18.0f, 18.0f);
-                    transform.position = new Vector3(_centerLine, 10f, 0);
-                }
-                break;
-            case 1:
-                transform.Translate(Vector3.down * wave_speed * Time.deltaTime);
-                if (transform.position.x > (_centerLine - 5.0f) && bounceLeft == false)
-                {
-                    transform.Translate(Vector3.left * wave_speed * Time.deltaTime);
-                }
-                else
-                {
-                    bounceLeft = true;
-                }
-
-                if (transform.position.x < (_centerLine + 5.0f) && bounceLeft == true)
-                {
-                    transform.Translate(Vector3.right * wave_speed * Time.deltaTime);
-                }
-                else
-                {
-                    bounceLeft = false;
-                }
-
-                if (transform.position.y < -22.0f)
-                {
-                    _centerLine = UnityEngine.Random.Range(-18.0f, 18.0f);
-                    transform.position = new Vector3(_centerLine, 10f, 0);
-                }
-                break;
-            case 2:
-                transform.Translate(Vector3.right * wave_speed * Time.deltaTime);
-
-                if (transform.position.x > 20.0f)
-                {
-                    _centerLine = UnityEngine.Random.Range(-10.0f, 10.0f);
-                    transform.position = new Vector3(-20f, _centerLine, 0);
-                }
-                break;
-            default:
-                break;
+            Vector3 target = new Vector3(hitColliders[0].transform.position.x, hitColliders[0].transform.position.y,0);
+            Vector3 myPosition = new Vector3(this.transform.position.x, this.transform.position.y,0);
+            transform.position = Vector3.MoveTowards(myPosition, target, wave_speed * Time.deltaTime);
         }
+        else
+        {
+            switch (enemyID)
+            {
+                case 0:
+                    transform.Translate(Vector3.down * wave_speed * Time.deltaTime);
+                    if (transform.position.x > (_centerLine - 5.0f) && bounceLeft == false)
+                    {
+                        transform.Translate(Vector3.left * wave_speed * Time.deltaTime);
+                    }
+                    else
+                    {
+                        bounceLeft = true;
+                    }
 
+                    if (transform.position.x < (_centerLine + 5.0f) && bounceLeft == true)
+                    {
+                        transform.Translate(Vector3.right * wave_speed * Time.deltaTime);
+                    }
+                    else
+                    {
+                        bounceLeft = false;
+                    }
+
+                    if (transform.position.y < -22.0f)
+                    {
+                        _centerLine = UnityEngine.Random.Range(-18.0f, 18.0f);
+                        transform.position = new Vector3(_centerLine, 10f, 0);
+                    }
+                    break;
+                case 1:
+                    transform.Translate(Vector3.down * wave_speed * Time.deltaTime);
+                    if (transform.position.x > (_centerLine - 5.0f) && bounceLeft == false)
+                    {
+                        transform.Translate(Vector3.left * wave_speed * Time.deltaTime);
+                    }
+                    else
+                    {
+                        bounceLeft = true;
+                    }
+
+                    if (transform.position.x < (_centerLine + 5.0f) && bounceLeft == true)
+                    {
+                        transform.Translate(Vector3.right * wave_speed * Time.deltaTime);
+                    }
+                    else
+                    {
+                        bounceLeft = false;
+                    }
+
+                    if (transform.position.y < -22.0f)
+                    {
+                        _centerLine = UnityEngine.Random.Range(-18.0f, 18.0f);
+                        transform.position = new Vector3(_centerLine, 10f, 0);
+                    }
+                    break;
+                case 2:
+                    transform.Translate(Vector3.right * wave_speed * Time.deltaTime);
+
+                    if (transform.position.x > 20.0f)
+                    {
+                        _centerLine = UnityEngine.Random.Range(-10.0f, 10.0f);
+                        transform.position = new Vector3(-20f, _centerLine, 0);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)

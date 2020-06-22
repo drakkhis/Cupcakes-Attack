@@ -1,10 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Users;
 [RequireComponent(typeof(PlayerInput))]
 public class UIManager : MonoBehaviour
 {
