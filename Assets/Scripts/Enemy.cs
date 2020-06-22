@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,6 +24,12 @@ public class Enemy : MonoBehaviour
     private int _curWave;
     [SerializeField]
     private int enemyID;
+    [SerializeField]
+    private int _shields;
+    private GameObject _shieldObj;
+    [SerializeField]
+    private float _shieldChancePercent;
+    private GameObject _other;
     void SetInActive()
     {
         _collider2D.enabled = false;
@@ -54,6 +61,14 @@ public class Enemy : MonoBehaviour
         _audioSource = GetComponent<AudioSource>();
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<spawnManager>();
         _centerLine = transform.position.x;
+        _shieldObj = transform.Find("Shields").gameObject;
+        _shieldObj.SetActive(false);
+        float _shieldRandom = UnityEngine.Random.Range(0f, 100.0f);
+        if (_shieldChancePercent >= _shieldRandom)
+        {
+            _shieldObj.SetActive(true);
+            _shields = 1;
+        }
         if (_player == null)
         {
             Debug.LogError("Player is NULL");
@@ -161,23 +176,47 @@ public class Enemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (_other == other.gameObject) return;
+        _other = other.gameObject;
+        if (_shields != 0)
         {
-            Player player = other.transform.GetComponent<Player>();
-            if (player != null)
+            if (other.gameObject.CompareTag("Player"))
             {
-                other.GetComponent<Player>().damage();
+                _shields--;
+                _shieldObj.SetActive(false);
+                Player player = other.transform.GetComponent<Player>();
+                if (player != null)
+                {
+                    other.GetComponent<Player>().damage();
+                }
             }
-            OnEnemyDeath();
+            if (other.gameObject.CompareTag("Laser"))
+            {
+                _shields--;
+                _shieldObj.SetActive(false);
+                Destroy(other.gameObject);
+            }
         }
-        if (other.gameObject.CompareTag("Laser"))
+        else
         {
-            if (_player != null)
+            if (other.gameObject.CompareTag("Player"))
             {
-                _player.AddScore(points);
+                Player player = other.transform.GetComponent<Player>();
+                if (player != null)
+                {
+                    other.GetComponent<Player>().damage();
+                }
+                OnEnemyDeath();
             }
-            Destroy(other.gameObject);
-            OnEnemyDeath();
+            if (other.gameObject.CompareTag("Laser"))
+            {
+                if (_player != null)
+                {
+                    _player.AddScore(points);
+                }
+                Destroy(other.gameObject);
+                OnEnemyDeath();
+            }
         }
     }
 
@@ -194,6 +233,7 @@ public class Enemy : MonoBehaviour
 
         }
     }
+
     private void OnEnemyDeath()
     {
         _spawnManager.EnemyDestroyed();

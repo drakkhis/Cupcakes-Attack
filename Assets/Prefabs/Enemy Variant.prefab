@@ -78,6 +78,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6402511443497258966, guid: d755db16e516482448ad3322bc2e7c14,
         type: 3}
+    - target: {fileID: 1019555171604658626, guid: 48fc54e0fd2b14d4ea725e23cb034afa,
+        type: 3}
+      propertyPath: _shieldChancePercent
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 6866245679098302079, guid: 48fc54e0fd2b14d4ea725e23cb034afa,
         type: 3}
       propertyPath: m_Name
