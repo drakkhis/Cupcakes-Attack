@@ -1523,26 +1523,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74799347a398d444c8674f91821655d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab:
-  - {fileID: 6866245679098302079, guid: 48fc54e0fd2b14d4ea725e23cb034afa, type: 3}
-  - {fileID: 6893426090347248353, guid: 6c00e6dc44e7cbe449fe6cbb846d176c, type: 3}
-  - {fileID: 1287486941668210327, guid: c2179a3f0f95c804b84d4cbb4e325daa, type: 3}
-  _EnemyWeight: 0a000000050000000a000000
-  _PowerUpPrefab:
-  - {fileID: 2191976573764751392, guid: c0339a541e135574dad5453f3e3eaa77, type: 3}
-  - {fileID: 3580193388567839108, guid: 89c19703ad0f4b147bcd3a5b0b1c1612, type: 3}
-  - {fileID: 5039542814276463881, guid: 2479621755ad3a34c93ee278bbc62454, type: 3}
-  - {fileID: 2881804861052252603, guid: 04ea8f1f0e2ab0b46b6072c7cc8e736c, type: 3}
-  - {fileID: 6116093418274196397, guid: 3145f57caf9d67348b4ffe533d9f2cd5, type: 3}
-  - {fileID: 5022789444242965795, guid: c4fee09732f2f72499fbbe27c75b7171, type: 3}
-  - {fileID: 2787801699957855632, guid: 4c89ec7fb07ecb5498962915a8910cf5, type: 3}
-  _PowerupWeight: 0a0000000a0000000a0000001400000005000000010000000a000000
   _enemyContainer: {fileID: 753441756}
   _explosionPrefab: {fileID: 2849248968973489691, guid: 4b31df24b39bae742b8121dc5d815f6e,
     type: 3}
   _waves: 0a000000140000001e000000
   _waveText: {fileID: 412923862}
   _waveTextObj: {fileID: 1680861238}
+  _enemys:
+  - _EnemyPrefabObject: {fileID: 6866245679098302079, guid: 48fc54e0fd2b14d4ea725e23cb034afa,
+      type: 3}
+    _EnemySpawnWeight: 10
+  - _EnemyPrefabObject: {fileID: 6893426090347248353, guid: 6c00e6dc44e7cbe449fe6cbb846d176c,
+      type: 3}
+    _EnemySpawnWeight: 5
+  - _EnemyPrefabObject: {fileID: 1287486941668210327, guid: c2179a3f0f95c804b84d4cbb4e325daa,
+      type: 3}
+    _EnemySpawnWeight: 10
+  _powerups:
+  - _EnemyPrefabObject: {fileID: 2191976573764751392, guid: c0339a541e135574dad5453f3e3eaa77,
+      type: 3}
+    _EnemySpawnWeight: 10
+  - _EnemyPrefabObject: {fileID: 3580193388567839108, guid: 89c19703ad0f4b147bcd3a5b0b1c1612,
+      type: 3}
+    _EnemySpawnWeight: 10
+  - _EnemyPrefabObject: {fileID: 5039542814276463881, guid: 2479621755ad3a34c93ee278bbc62454,
+      type: 3}
+    _EnemySpawnWeight: 10
+  - _EnemyPrefabObject: {fileID: 2881804861052252603, guid: 04ea8f1f0e2ab0b46b6072c7cc8e736c,
+      type: 3}
+    _EnemySpawnWeight: 20
+  - _EnemyPrefabObject: {fileID: 6116093418274196397, guid: 3145f57caf9d67348b4ffe533d9f2cd5,
+      type: 3}
+    _EnemySpawnWeight: 5
+  - _EnemyPrefabObject: {fileID: 5022789444242965795, guid: c4fee09732f2f72499fbbe27c75b7171,
+      type: 3}
+    _EnemySpawnWeight: 1
+  - _EnemyPrefabObject: {fileID: 2787801699957855632, guid: 4c89ec7fb07ecb5498962915a8910cf5,
+      type: 3}
+    _EnemySpawnWeight: 10
 --- !u!4 &661418478
 Transform:
   m_ObjectHideFlags: 0

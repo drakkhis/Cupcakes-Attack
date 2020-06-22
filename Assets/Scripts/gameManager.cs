@@ -16,7 +16,8 @@ public class gameManager : MonoBehaviour
     private bool _paused = false;
     [SerializeField]
     private GameObject _pauseMenu;
-    // Start is called before the first frame update
+
+
     void Start()
     {
         _gameOver = false;

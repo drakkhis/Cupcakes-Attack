@@ -3,20 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class spawnManager : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject[] _enemyPrefab;
-    [SerializeField]
-    private int[] _EnemyWeight;
-    [SerializeField]
-    private GameObject[] _PowerUpPrefab;
-    [SerializeField]
-    private int[] _PowerupWeight;
     [SerializeField]
     private GameObject _enemyContainer;
     private bool active = true;
@@ -31,6 +24,22 @@ public class spawnManager : MonoBehaviour
     private Text _waveText;
     [SerializeField]
     private GameObject _waveTextObj;
+    [SerializeField]
+    private Enemys[] _enemys;
+    private List<GameObject> _enemyPrefab;
+    private List<int> _EnemyWeight;
+    [SerializeField]
+    private Enemys[] _powerups;
+
+    [Serializable]
+    private class Enemys
+    {
+        [SerializeField]
+        public GameObject _EnemyPrefabObject;
+        [SerializeField]
+        public int _EnemySpawnWeight;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -75,11 +84,11 @@ public class spawnManager : MonoBehaviour
                         StartCoroutine(WaveText(_curWave + 1));
                     }
                     Vector3 spawnpoint;
-                    GameObject randomEnemy = RandomItem(_enemyPrefab, _EnemyWeight);
+                    GameObject randomEnemy = RandomItem(_enemys);
                     int index = 0;
-                    for (int i = 0; i < _enemyPrefab.Length; i++)
+                    for (int i = 0; i < _enemys.Length; i++)
                     {
-                        if (_enemyPrefab[i] == randomEnemy)
+                        if (_enemys[i]._EnemyPrefabObject == randomEnemy)
                         {
                             index = i;
                             break;
@@ -114,11 +123,11 @@ public class spawnManager : MonoBehaviour
                         StartCoroutine(WaveText(_curWave + 1));
                     }
                     Vector3 spawnpoint;
-                    GameObject randomEnemy = RandomItem(_enemyPrefab, _EnemyWeight);
+                    GameObject randomEnemy = RandomItem(_enemys);
                     int index = 0;
-                    for (int i = 0; i < _enemyPrefab.Length; i++)
+                    for (int i = 0; i < _enemys.Length; i++)
                     {
-                        if (_enemyPrefab[i] == randomEnemy)
+                        if (_enemys[i]._EnemyPrefabObject == randomEnemy)
                         {
                             index = i;
                             break;
@@ -132,7 +141,7 @@ public class spawnManager : MonoBehaviour
                     {
                         spawnpoint = new Vector3(UnityEngine.Random.Range(-18.0f, 18.0f), 7.5f, 0);
                     }
-                    
+
                     GameObject newEnemy = Instantiate(randomEnemy, spawnpoint, Quaternion.identity);
                     newEnemy.GetComponent<Enemy>().SetEnemyID(index);
                     _enemies_Spwaned++;
@@ -153,11 +162,11 @@ public class spawnManager : MonoBehaviour
                         StartCoroutine(WaveText(_curWave + 1));
                     }
                     Vector3 spawnpoint;
-                    GameObject randomEnemy = RandomItem(_enemyPrefab, _EnemyWeight);
+                    GameObject randomEnemy = RandomItem(_enemys);
                     int index = 0;
-                    for (int i = 0; i < _enemyPrefab.Length; i++)
+                    for (int i = 0; i < _enemys.Length; i++)
                     {
-                        if (_enemyPrefab[i] == randomEnemy)
+                        if (_enemys[i]._EnemyPrefabObject == randomEnemy)
                         {
                             index = i;
                             break;
@@ -199,20 +208,29 @@ public class spawnManager : MonoBehaviour
     }
 
 
-    private GameObject RandomItem(GameObject[] repfabs, int[] weights)
+    private GameObject RandomItem(Enemys[] prefabs)
     {
-        if (repfabs?.Length > 0 && repfabs?.Length == weights?.Length)
+        var results = prefabs.OrderByDescending(x => x._EnemySpawnWeight).ToList();
+        GameObject tempObject;
+        int tempInt;
+        _enemyPrefab = new List<GameObject>();
+        _EnemyWeight = new List<int>();
+        for (var i = 0; i < results.Count; i++)
         {
-            var total = 0f;
-            var roll = Random.Range(0, weights.Sum());
-            for (var i = 0; i < weights.Length; i++)
-            {
-                total += weights[i];
-                if (roll < total)
-                    return repfabs[i];
-            }
+            tempObject = results[i]._EnemyPrefabObject;
+            _enemyPrefab.Add(tempObject);
+            tempInt = results[i]._EnemySpawnWeight;
+            _EnemyWeight.Add(tempInt);
         }
-        return repfabs[Random.Range(0, repfabs.Length)];
+        var total = 0f;
+        var roll = Random.Range(0, _EnemyWeight.Sum());
+        for (var i = 0; i < _EnemyWeight.Count; i++)
+        {
+            total += _EnemyWeight[i];
+            if (roll < total)
+                return _enemyPrefab[i];
+        }
+        return _enemyPrefab[Random.Range(0, _enemyPrefab.Count)];
     }
 
     IEnumerator spawnPowerUpControl()
@@ -222,12 +240,12 @@ public class spawnManager : MonoBehaviour
         {
             yield return new WaitForSeconds(UnityEngine.Random.Range(5.0f, 10.0f));
             Vector3 spawnpoint = new Vector3(UnityEngine.Random.Range(-18.0f, 18.0f), 9.7f, 0);
-            GameObject randomPowerup = RandomItem(_PowerUpPrefab, _PowerupWeight);
+            GameObject randomPowerup = RandomItem(_powerups);
             GameObject InstPowerUp = Instantiate(randomPowerup, spawnpoint, Quaternion.identity);
             int index = 0;
-            for (int i = 0; i < _PowerUpPrefab.Length; i++)
+            for (int i = 0; i < _powerups.Length; i++)
             {
-                if (_PowerUpPrefab[i] == randomPowerup)
+                if (_powerups[i]._EnemyPrefabObject == randomPowerup)
                 {
                     index = i;
                     break;
