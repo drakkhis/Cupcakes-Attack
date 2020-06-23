@@ -1,5 +1,4 @@
-﻿using Boo.Lang;
-using DigitalRuby.LightningBolt;
+﻿using DigitalRuby.LightningBolt;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
