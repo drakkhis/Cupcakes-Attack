@@ -77,6 +77,11 @@ PrefabInstance:
       propertyPath: _shieldChancePercent
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1019555171604658626, guid: 48fc54e0fd2b14d4ea725e23cb034afa,
+        type: 3}
+      propertyPath: _smartEnemyPercent
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6866245679098302079, guid: 48fc54e0fd2b14d4ea725e23cb034afa,
         type: 3}
       propertyPath: m_Name

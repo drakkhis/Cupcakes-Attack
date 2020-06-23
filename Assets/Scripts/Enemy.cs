@@ -29,7 +29,8 @@ public class Enemy : MonoBehaviour
     private GameObject _other;
     [SerializeField]
     private bool _smartEnemy;
-
+    [SerializeField]
+    private int _smartEnemyPercent;
     void SetInActive()
     {
         _collider2D.enabled = false;
@@ -69,6 +70,11 @@ public class Enemy : MonoBehaviour
             _shieldObj.SetActive(true);
             _shields = 1;
         }
+        float _smartRandom = UnityEngine.Random.Range(0f, 100.0f);
+        if (_smartEnemyPercent >= _smartRandom)
+        {
+            _smartEnemy = true;
+        }
         if (_player == null)
         {
             Debug.LogError("Player is NULL");
@@ -91,6 +97,8 @@ public class Enemy : MonoBehaviour
         }
         _curWave = _spawnManager.CurWave();
 
+
+
         StartCoroutine(shootEnemyLaser());
     }
 
@@ -108,10 +116,10 @@ public class Enemy : MonoBehaviour
 
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 5);
 
-        if (hitColliders[0].transform.gameObject.CompareTag("Player"))
+        if (hitColliders.Length > 0 && hitColliders[0].transform.gameObject.CompareTag("Player"))
         {
-            Vector3 target = new Vector3(hitColliders[0].transform.position.x, hitColliders[0].transform.position.y,0);
-            Vector3 myPosition = new Vector3(this.transform.position.x, this.transform.position.y,0);
+            Vector3 target = new Vector3(hitColliders[0].transform.position.x, hitColliders[0].transform.position.y, 0);
+            Vector3 myPosition = new Vector3(this.transform.position.x, this.transform.position.y, 0);
             transform.position = Vector3.MoveTowards(myPosition, target, wave_speed * Time.deltaTime);
         }
         else
@@ -238,19 +246,23 @@ public class Enemy : MonoBehaviour
             yield return new WaitForSeconds(UnityEngine.Random.Range(2.0f, 5.0f));
             if (active == true)
             {
-              Vector2 playerPos = GameObject.Find("Player").transform.position;
-              if (_smartEnemy && playerPos.y < this.transform.position.y)
-              {
-                Vector3 offset = new Vector3(0,1.05f,0);
-                GameObject _shot = Instantiate(_EnemylaserPrefab, transform.position + offset, Quaternion.inverse(this.rotation));
-                _shot.GetComponent<EnemyLaser>.FireUp();
-              }
-              else
-              {
-               
-                Vector3 offset = new Vector3(0, -1.05f, 0);
-                Instantiate(_EnemylaserPrefab, transform.position + offset, Quaternion.identity);
-              } 
+                if (GameObject.Find("Player") != null)
+                {
+                    Vector2 playerPos = GameObject.Find("Player").transform.position;
+
+                    if (_smartEnemy && playerPos.y > this.transform.position.y)
+                    {
+                        Vector3 offset = new Vector3(0, 1.05f, 0);
+                        GameObject _shot = Instantiate(_EnemylaserPrefab, transform.position + offset, Quaternion.Inverse(this.transform.rotation));
+                        _shot.GetComponent<EnemyLaser>().FireUp();
+                    }
+                    else
+                    {
+
+                        Vector3 offset = new Vector3(0, -1.05f, 0);
+                        Instantiate(_EnemylaserPrefab, transform.position + offset, Quaternion.identity);
+                    }
+                }
             }
 
         }

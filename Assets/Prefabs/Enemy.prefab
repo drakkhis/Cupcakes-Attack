@@ -56,6 +56,8 @@ MonoBehaviour:
   enemyID: 0
   _shields: 0
   _shieldChancePercent: 25
+  _smartEnemy: 0
+  _smartEnemyPercent: 25
 --- !u!212 &8361673288993738552
 SpriteRenderer:
   m_ObjectHideFlags: 0
