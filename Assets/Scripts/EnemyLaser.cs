@@ -6,10 +6,7 @@ public class EnemyLaser : MonoBehaviour
     private float _enemylaserSpeed = 10.0f;
     private bool _up = false;
     // Start is called before the first frame update
-    void Start()
-    {
 
-    }
     // Update is called once per frame
     void Update()
     {

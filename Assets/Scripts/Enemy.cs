@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour
     private bool _smartEnemy;
     [SerializeField]
     private int _smartEnemyPercent;
+    GameObject _trackedPowerUp;
     void SetInActive()
     {
         _collider2D.enabled = false;
@@ -99,18 +100,31 @@ public class Enemy : MonoBehaviour
 
 
 
-        StartCoroutine(shootEnemyLaser());
+        StartCoroutine(ShootEnemyLaser());
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        enemyMovement();
+        EnemyMovement();
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector2.up);
+
+        // If it hits something...
+        if (hit.collider != null && hit.transform.gameObject != _trackedPowerUp)
+        {
+            if (hit.transform.gameObject.CompareTag("powerUp"))
+            {
+                _trackedPowerUp = hit.transform.gameObject;
+                Vector3 offset = new Vector3(0, -1.05f, 0);
+                Instantiate(_EnemylaserPrefab, transform.position + offset, Quaternion.identity);
+            }
+        }
+
 
     }
 
-    private void enemyMovement()
+    private void EnemyMovement()
     {
         float wave_speed = _enemySpeed + (_curWave * 1.5f);
 
@@ -239,7 +253,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    IEnumerator shootEnemyLaser()
+    IEnumerator ShootEnemyLaser()
     {
         while (active == true)
         {

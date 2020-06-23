@@ -9,7 +9,7 @@ public class powerUp : MonoBehaviour
     private int powerupID;
     [SerializeField]
     private GameObject _audioPrefab;
-    [SerializeField] 
+    [SerializeField]
     private float _rotateSpeed = 100f;
     // Start is called before the first frame update
 
@@ -39,7 +39,7 @@ public class powerUp : MonoBehaviour
             Player player = collision.transform.GetComponent<Player>();
             if (player != null)
             {
-                switch(powerupID)
+                switch (powerupID)
                 {
                     case 0:
                         collision.GetComponent<Player>().powerUp_TripleShot();
@@ -70,6 +70,10 @@ public class powerUp : MonoBehaviour
             GameObject clone = Instantiate(_audioPrefab, transform.position, transform.rotation);
             AudioSource cloneAudio = clone.GetComponent<AudioSource>();
             Destroy(clone, cloneAudio.clip.length + 0.1f);
+            Destroy(this.gameObject);
+        }
+        else if (collision.gameObject.CompareTag("EnemyLaser"))
+        {
             Destroy(this.gameObject);
         }
     }
