@@ -27,11 +27,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image thrusterImage;
     [SerializeField]
-    private Image pauseImage1;
-    [SerializeField]
-    private Image fireImage1;
-    [SerializeField]
-    private Image thrusterImage1;
+    private Image collectImage;
 
     // refs to your sprites
     public Sprite gamepadPauseImage;
@@ -40,7 +36,8 @@ public class UIManager : MonoBehaviour
     public Sprite keyboardFireImage;
     public Sprite gamepadThrusterImage;
     public Sprite keyboardThrusterImage;
-
+    public Sprite gamepadCollectImage;
+    public Sprite keyboardCollectImage;
 
     // Start is called before the first frame update
     void Start()
@@ -65,6 +62,7 @@ public class UIManager : MonoBehaviour
             pauseImage.sprite = keyboardPauseImage;
             fireImage.sprite = keyboardFireImage;
             thrusterImage.sprite = keyboardThrusterImage;
+            collectImage.sprite = keyboardCollectImage;
 
         }
         else if (schemeName.Equals("Gamepad"))
@@ -72,6 +70,7 @@ public class UIManager : MonoBehaviour
             pauseImage.sprite = gamepadPauseImage;
             fireImage.sprite = gamepadFireImage;
             thrusterImage.sprite = gamepadThrusterImage;
+            collectImage.sprite = gamepadCollectImage;
         }
     }
 

@@ -41,6 +41,14 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""PickUpCollect"",
+                    ""type"": ""Button"",
+                    ""id"": ""2dc7bdff-981b-4274-9a9f-4a0de6d0679d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -263,6 +271,28 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                     ""action"": ""trusters"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""17419212-af34-4c8a-acff-db2313e94fd7"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""PickUpCollect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d0b51722-cf74-4e19-a515-ea4d54fbdd72"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""PickUpCollect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -297,6 +327,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         m_player_movement = m_player.FindAction("movement", throwIfNotFound: true);
         m_player_fire = m_player.FindAction("fire", throwIfNotFound: true);
         m_player_trusters = m_player.FindAction("trusters", throwIfNotFound: true);
+        m_player_PickUpCollect = m_player.FindAction("PickUpCollect", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -349,6 +380,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_player_movement;
     private readonly InputAction m_player_fire;
     private readonly InputAction m_player_trusters;
+    private readonly InputAction m_player_PickUpCollect;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -356,6 +388,7 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         public InputAction @movement => m_Wrapper.m_player_movement;
         public InputAction @fire => m_Wrapper.m_player_fire;
         public InputAction @trusters => m_Wrapper.m_player_trusters;
+        public InputAction @PickUpCollect => m_Wrapper.m_player_PickUpCollect;
         public InputActionMap Get() { return m_Wrapper.m_player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -374,6 +407,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @trusters.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTrusters;
                 @trusters.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTrusters;
                 @trusters.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTrusters;
+                @PickUpCollect.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickUpCollect;
+                @PickUpCollect.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickUpCollect;
+                @PickUpCollect.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickUpCollect;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -387,6 +423,9 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
                 @trusters.started += instance.OnTrusters;
                 @trusters.performed += instance.OnTrusters;
                 @trusters.canceled += instance.OnTrusters;
+                @PickUpCollect.started += instance.OnPickUpCollect;
+                @PickUpCollect.performed += instance.OnPickUpCollect;
+                @PickUpCollect.canceled += instance.OnPickUpCollect;
             }
         }
     }
@@ -414,5 +453,6 @@ public class @PlayerInputActions : IInputActionCollection, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnTrusters(InputAction.CallbackContext context);
+        void OnPickUpCollect(InputAction.CallbackContext context);
     }
 }

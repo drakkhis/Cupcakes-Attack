@@ -1,4 +1,5 @@
-﻿using DigitalRuby.LightningBolt;
+﻿using Boo.Lang;
+using DigitalRuby.LightningBolt;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -456,5 +457,38 @@ public class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
 
         _isPressed = context.ReadValue<float>();
 
+    }
+
+    public void OnPickUpCollect(InputAction.CallbackContext context)
+    {
+        var device = context.control.device;
+        var scheme = InputControlScheme.FindControlSchemeForDevice(device, context.action.actionMap.controlSchemes);
+        if (scheme.HasValue)
+        {
+            _uiManager.updateButtonImage(scheme.Value.name);
+        }
+        else
+
+        {
+            _uiManager.updateButtonImage("none");
+        }
+
+        float _keyPressed = context.ReadValue<float>();
+        if (_keyPressed == 1)
+        {
+            GameObject[] powerUps = GameObject.FindGameObjectsWithTag("powerUp");
+            foreach (GameObject powerUp in powerUps)
+            {
+                powerUp.SendMessage("CollectPowerupPressed", (Vector2)transform.position);
+            }
+        }
+        else
+        {
+            GameObject[] powerUps = GameObject.FindGameObjectsWithTag("powerUp");
+            foreach (GameObject powerUp in powerUps)
+            {
+                powerUp.SendMessage("CollectPowerupNotPressed");
+            }
+        }
     }
 }

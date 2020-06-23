@@ -11,6 +11,8 @@ public class powerUp : MonoBehaviour
     private GameObject _audioPrefab;
     [SerializeField]
     private float _rotateSpeed = 100f;
+    private bool _summoned = false;
+    private Vector2 _playerPos;
     // Start is called before the first frame update
 
 
@@ -18,7 +20,15 @@ public class powerUp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.down * _powerUpSpeed * Time.deltaTime, Space.World);
+        if (_summoned == false)
+        {
+            transform.Translate(Vector3.down * _powerUpSpeed * Time.deltaTime, Space.World);
+        }
+        else
+        {
+            transform.position = Vector3.MoveTowards(this.transform.position, _playerPos, _powerUpSpeed * Time.deltaTime);
+        }
+        
         if (powerupID == 3) this.transform.Rotate(Vector3.forward, _rotateSpeed * Time.deltaTime, Space.Self);
 
         if (transform.position.y < -22.0f)
@@ -30,6 +40,17 @@ public class powerUp : MonoBehaviour
     public void SetPowerupID(int ID)
     {
         powerupID = ID;
+    }
+
+    public void CollectPowerupPressed(Vector2 pos)
+    {
+        _playerPos = pos;
+        _summoned = true;
+    }
+    public void CollectPowerupNotPressed()
+    {
+        _playerPos = default;
+        _summoned = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
