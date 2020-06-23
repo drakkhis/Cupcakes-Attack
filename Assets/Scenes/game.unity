@@ -1621,6 +1621,9 @@ MonoBehaviour:
   - _EnemyPrefabObject: {fileID: 1287486941668210327, guid: c2179a3f0f95c804b84d4cbb4e325daa,
       type: 3}
     _EnemySpawnWeight: 10
+  - _EnemyPrefabObject: {fileID: 6653901831440273144, guid: 702a3c775aac420429a687eb8ed4b76f,
+      type: 3}
+    _EnemySpawnWeight: 5
   _powerups:
   - _EnemyPrefabObject: {fileID: 2191976573764751392, guid: c0339a541e135574dad5453f3e3eaa77,
       type: 3}
@@ -1633,7 +1636,7 @@ MonoBehaviour:
     _EnemySpawnWeight: 10
   - _EnemyPrefabObject: {fileID: 2881804861052252603, guid: 04ea8f1f0e2ab0b46b6072c7cc8e736c,
       type: 3}
-    _EnemySpawnWeight: 20
+    _EnemySpawnWeight: 30
   - _EnemyPrefabObject: {fileID: 6116093418274196397, guid: 3145f57caf9d67348b4ffe533d9f2cd5,
       type: 3}
     _EnemySpawnWeight: 5

@@ -31,6 +31,8 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private int _smartEnemyPercent;
     GameObject _trackedPowerUp;
+    [SerializeField]
+    private bool _avoidShot = false;
     void SetInActive()
     {
         _collider2D.enabled = false;
@@ -135,6 +137,12 @@ public class Enemy : MonoBehaviour
             Vector3 myPosition = new Vector3(this.transform.position.x, this.transform.position.y, 0);
             transform.position = Vector3.MoveTowards(myPosition, target, wave_speed * Time.deltaTime);
         }
+        else if ((hitColliders.Length > 0) && (hitColliders[0].transform.gameObject.CompareTag("Laser")) && (_avoidShot == true))
+        {
+            Vector3 target = new Vector3(hitColliders[0].transform.position.x, hitColliders[0].transform.position.y, 0);
+            Vector3 myPosition = new Vector3(this.transform.position.x, this.transform.position.y, 0);
+            transform.position = Vector3.MoveTowards(myPosition, target, -(wave_speed*2) * Time.deltaTime);
+        }
         else
         {
             switch (enemyID)
@@ -198,6 +206,15 @@ public class Enemy : MonoBehaviour
                     {
                         _centerLine = UnityEngine.Random.Range(-10.0f, 10.0f);
                         transform.position = new Vector3(-20f, _centerLine, 0);
+                    }
+                    break;
+                case 3:
+                    transform.Translate(Vector3.down * wave_speed * Time.deltaTime);
+
+                    if (transform.position.y < -22.0f)
+                    {
+                        _centerLine = UnityEngine.Random.Range(-18.0f, 18.0f);
+                        transform.position = new Vector3(_centerLine, 10f, 0);
                     }
                     break;
                 default:
