@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _shieldChancePercent;
     private GameObject _other;
+    [SerializeField]
     private bool _smartEnemy;
 
     void SetInActive()
@@ -237,8 +238,19 @@ public class Enemy : MonoBehaviour
             yield return new WaitForSeconds(UnityEngine.Random.Range(2.0f, 5.0f));
             if (active == true)
             {
+              Vector2 playerPos = GameObject.Find("Player").transform.position;
+              if (_smartEnemy && playerPos.y < this.transform.position.y)
+              {
+                Vector3 offset = new Vector3(0,1.05f,0);
+                GameObject _shot = Instantiate(_EnemylaserPrefab, transform.position + offset, Quaternion.inverse(this.rotation));
+                _shot.GetComponent<EnemyLaser>.FireUp();
+              }
+              else
+              {
+               
                 Vector3 offset = new Vector3(0, -1.05f, 0);
                 Instantiate(_EnemylaserPrefab, transform.position + offset, Quaternion.identity);
+              } 
             }
 
         }
