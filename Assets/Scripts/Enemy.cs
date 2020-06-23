@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _shieldChancePercent;
     private GameObject _other;
+
     void SetInActive()
     {
         _collider2D.enabled = false;
