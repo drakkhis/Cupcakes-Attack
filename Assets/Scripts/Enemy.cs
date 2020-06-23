@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.IO;
 using UnityEngine;
 
@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private float _shieldChancePercent;
     private GameObject _other;
+    private bool _smartEnemy;
 
     void SetInActive()
     {
