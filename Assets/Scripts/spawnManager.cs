@@ -17,7 +17,7 @@ public class spawnManager : MonoBehaviour
     private int _enemies_Destroyed = 0;
     [SerializeField]
     private int[] _waves;
-    private int _curWave = 0;
+    private int _curWave = 1;
     [SerializeField]
     private Text _waveText;
     [SerializeField]
@@ -28,6 +28,9 @@ public class spawnManager : MonoBehaviour
     private List<int> _EnemyWeight;
     [SerializeField]
     private Enemys[] _powerups;
+    [SerializeField]
+    private GameObject _bossPrefab;
+    private int _curRound = 1;
 
     [Serializable]
     private class Enemys
@@ -38,18 +41,6 @@ public class spawnManager : MonoBehaviour
         public int _EnemySpawnWeight;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void StartSpawning()
     {
         StartCoroutine(spawnEnemyControl());
@@ -58,6 +49,11 @@ public class spawnManager : MonoBehaviour
     public int CurWave()
     {
         return _curWave;
+    }
+
+    public int CurRound()
+    {
+        return _curRound;
     }
 
     IEnumerator spawnEnemyControl()
@@ -74,51 +70,12 @@ public class spawnManager : MonoBehaviour
     {
         switch (_curWave)
         {
-            case 0:
-                if (_enemies_Spwaned < _waves[_curWave])
-                {
-                    if (_enemies_Spwaned == 0)
-                    {
-                        StartCoroutine(WaveText(_curWave + 1));
-                    }
-                    Vector3 spawnpoint;
-                    GameObject randomEnemy = RandomItem(_enemys);
-                    int index = 0;
-                    for (int i = 0; i < _enemys.Length; i++)
-                    {
-                        if (_enemys[i]._EnemyPrefabObject == randomEnemy)
-                        {
-                            index = i;
-                            break;
-                        }
-                    }
-                    if (index == 2)
-                    {
-                        spawnpoint = new Vector3(-20f, UnityEngine.Random.Range(-10f, 10f), 0);
-                    }
-                    else
-                    {
-                        spawnpoint = new Vector3(UnityEngine.Random.Range(-18.0f, 18.0f), 7.5f, 0);
-                    }
-
-                    GameObject newEnemy = Instantiate(randomEnemy, spawnpoint, Quaternion.identity);
-                    newEnemy.GetComponent<Enemy>().SetEnemyID(index);
-                    _enemies_Spwaned++;
-                    newEnemy.transform.parent = _enemyContainer.transform;
-                }
-                if (_enemies_Destroyed == _waves[_curWave])
-                {
-                    _curWave++;
-                    _enemies_Spwaned = 0;
-                    _enemies_Destroyed = 0;
-                }
-                break;
             case 1:
-                if (_enemies_Spwaned < _waves[_curWave])
+                if (_enemies_Spwaned < _waves[_curWave-1])
                 {
                     if (_enemies_Spwaned == 0)
                     {
-                        StartCoroutine(WaveText(_curWave + 1));
+                        StartCoroutine(WaveText(_curRound, _curWave));
                     }
                     Vector3 spawnpoint;
                     GameObject randomEnemy = RandomItem(_enemys);
@@ -145,7 +102,7 @@ public class spawnManager : MonoBehaviour
                     _enemies_Spwaned++;
                     newEnemy.transform.parent = _enemyContainer.transform;
                 }
-                if (_enemies_Destroyed == _waves[_curWave])
+                if (_enemies_Destroyed == _waves[_curWave-1])
                 {
                     _curWave++;
                     _enemies_Spwaned = 0;
@@ -153,11 +110,11 @@ public class spawnManager : MonoBehaviour
                 }
                 break;
             case 2:
-                if (_enemies_Spwaned < _waves[_curWave])
+                if (_enemies_Spwaned < _waves[_curWave-1])
                 {
                     if (_enemies_Spwaned == 0)
                     {
-                        StartCoroutine(WaveText(_curWave + 1));
+                        StartCoroutine(WaveText(_curRound, _curWave));
                     }
                     Vector3 spawnpoint;
                     GameObject randomEnemy = RandomItem(_enemys);
@@ -184,9 +141,65 @@ public class spawnManager : MonoBehaviour
                     _enemies_Spwaned++;
                     newEnemy.transform.parent = _enemyContainer.transform;
                 }
-                if (_enemies_Destroyed == _waves[_curWave])
+                if (_enemies_Destroyed == _waves[_curWave-1])
                 {
-                    _curWave = 0;
+                    _curWave++;
+                    _enemies_Spwaned = 0;
+                    _enemies_Destroyed = 0;
+                }
+                break;
+            case 3:
+                if (_enemies_Spwaned < _waves[_curWave-1])
+                {
+                    if (_enemies_Spwaned == 0)
+                    {
+                        StartCoroutine(WaveText(_curRound, _curWave));
+                    }
+                    Vector3 spawnpoint;
+                    GameObject randomEnemy = RandomItem(_enemys);
+                    int index = 0;
+                    for (int i = 0; i < _enemys.Length; i++)
+                    {
+                        if (_enemys[i]._EnemyPrefabObject == randomEnemy)
+                        {
+                            index = i;
+                            break;
+                        }
+                    }
+                    if (index == 2)
+                    {
+                        spawnpoint = new Vector3(-20f, UnityEngine.Random.Range(-10f, 10f), 0);
+                    }
+                    else
+                    {
+                        spawnpoint = new Vector3(UnityEngine.Random.Range(-18.0f, 18.0f), 7.5f, 0);
+                    }
+
+                    GameObject newEnemy = Instantiate(randomEnemy, spawnpoint, Quaternion.identity);
+                    newEnemy.GetComponent<Enemy>().SetEnemyID(index);
+                    _enemies_Spwaned++;
+                    newEnemy.transform.parent = _enemyContainer.transform;
+                }
+                if (_enemies_Destroyed == _waves[_curWave-1])
+                {
+                    _curWave++;
+                    _enemies_Spwaned = 0;
+                    _enemies_Destroyed = 0;
+                }
+                break;
+            case 4:
+                if (_enemies_Spwaned < _waves[_curWave-1])
+                {
+                    Vector3 spawnpoint = new Vector3(0, 12, 0);
+                    GameObject newEnemy = Instantiate(_bossPrefab, spawnpoint, Quaternion.identity);
+                    newEnemy.GetComponent<KittyHead>().SetEnemyID(666);
+                    _enemies_Spwaned++;
+                    newEnemy.transform.parent = _enemyContainer.transform;
+                }
+                if (_enemies_Destroyed == _waves[_curWave-1])
+                {
+                    _curWave = 1;
+                    _curRound++;
                     _enemies_Spwaned = 0;
                     _enemies_Destroyed = 0;
                 }
@@ -197,9 +210,9 @@ public class spawnManager : MonoBehaviour
 
     }
 
-    IEnumerator WaveText(int v)
+    IEnumerator WaveText(int round, int wave)
     {
-        _waveText.text = "Wave " + v;
+        _waveText.text = "Round: " + round + "\nWave " + wave;
         _waveTextObj.SetActive(true);
         yield return new WaitForSeconds(1.0f);
         _waveTextObj.SetActive(false);

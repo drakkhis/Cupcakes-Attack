@@ -498,7 +498,12 @@ public class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
         if (_keyPressed == 1)
         {
             GameObject[] powerUps = GameObject.FindGameObjectsWithTag("powerUp");
+            GameObject[] enemyLaser = GameObject.FindGameObjectsWithTag("EnemyLaser");
             foreach (GameObject powerUp in powerUps)
+            {
+                powerUp.SendMessage("CollectPowerupPressed", (Vector2)transform.position);
+            }
+            foreach (GameObject powerUp in enemyLaser)
             {
                 powerUp.SendMessage("CollectPowerupPressed", (Vector2)transform.position);
             }

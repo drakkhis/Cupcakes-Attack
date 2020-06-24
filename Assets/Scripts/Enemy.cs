@@ -97,7 +97,7 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("AudioSource is NULL");
         }
-        _curWave = _spawnManager.CurWave();
+        _curWave = _spawnManager.CurWave() * _spawnManager.CurRound();
 
 
 
