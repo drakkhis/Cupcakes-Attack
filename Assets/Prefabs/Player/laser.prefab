@@ -145,6 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _laserSpeed: 10
+  _homing: 0
 --- !u!95 &7289760901319771980
 Animator:
   serializedVersion: 3

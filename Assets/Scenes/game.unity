@@ -1828,7 +1828,10 @@ MonoBehaviour:
   _LaserFireClip: {fileID: 8300000, guid: 1b20ef87683ccb745bcaaff26608932c, type: 3}
   _trippleShot: 0
   _lightningShot: 0
+  _homingShot: 0
   _trippleShotPrefab: {fileID: 7103939382168921524, guid: cb8abcd696498c6499ae2dcd4b33960a,
+    type: 3}
+  _homingShotPrefab: {fileID: 1421985046466079769, guid: 96be8fd99db96344a8e4b6c1cd4586a6,
     type: 3}
   _shields: 0
   _rightWing: {fileID: 329841209}

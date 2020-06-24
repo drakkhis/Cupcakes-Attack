@@ -45,7 +45,11 @@ public class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
     [SerializeField]
     private bool _lightningShot = false;
     [SerializeField]
+    private bool _homingShot = false;
+    [SerializeField]
     private GameObject _trippleShotPrefab;
+    [SerializeField]
+    private GameObject _homingShotPrefab;
     [SerializeField]
     private int _shields = 0;
     private GameObject _shieldObj;
@@ -184,7 +188,15 @@ public class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
         _trippleShot = true;
         StartCoroutine(TrippleShotTimer());
     }
-
+    public void powerUp_HomingShot()
+    {
+        if (_homingShot == true)
+        {
+            StopCoroutine(HomingShotTimer());
+        }
+        _homingShot = true;
+        StartCoroutine(HomingShotTimer());
+    }
     public void powerUp_LightningShot()
     {
         if (_lightningShot == true)
@@ -245,6 +257,11 @@ public class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
     {
         yield return new WaitForSeconds(5.0f);
         _trippleShot = false;
+    }
+    private IEnumerator HomingShotTimer()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _homingShot = false;
     }
 
     private IEnumerator LightningShotTimer()
@@ -340,6 +357,11 @@ public class Player : MonoBehaviour, PlayerInputActions.IPlayerActions
             {
 
                 this.GetComponentInChildren<LightningBoltScript>().Shoot();
+            }
+            else if (_homingShot == true)
+            {
+                Vector3 offset = new Vector3(0, 1.05f, 0);
+                Instantiate(_homingShotPrefab, transform.position + offset, Quaternion.identity);
             }
             else
             {
