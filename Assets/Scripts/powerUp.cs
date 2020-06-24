@@ -84,7 +84,7 @@ public class powerUp : MonoBehaviour
                         collision.GetComponent<Player>().Neg_Powerup_Brain();
                         break;
                     case 7:
-                        collision.GetComponent.<Player>().powerUp_HomingShot();
+                        collision.GetComponent<Player>().powerUp_HomingShot();
                         break;
                     default:
                         Debug.Log("no powerup");

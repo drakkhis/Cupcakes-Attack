@@ -154,4 +154,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotateSpeed: 3
-  _explosionPrefab: {fileID: 0}
+  _explosionPrefab: {fileID: 2849248968973489691, guid: 4b31df24b39bae742b8121dc5d815f6e,
+    type: 3}

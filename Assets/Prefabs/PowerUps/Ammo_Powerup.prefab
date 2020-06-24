@@ -149,6 +149,7 @@ MonoBehaviour:
   _audioPrefab: {fileID: 2787105915083980333, guid: fa7a54daa2efe6a47b9636c8ff910099,
     type: 3}
   _rotateSpeed: 10
+  _rotate: 1
 --- !u!82 &8447317309430085419
 AudioSource:
   m_ObjectHideFlags: 0

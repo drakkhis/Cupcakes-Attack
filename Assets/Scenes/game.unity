@@ -4997,17 +4997,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 515909677643556900, guid: f53c3d71738adf9498600e94e9ce1754,
-        type: 3}
-      propertyPath: _explosionPrefab
-      value: 
-      objectReference: {fileID: 2849248968973489691, guid: 4b31df24b39bae742b8121dc5d815f6e,
-        type: 3}
-    - target: {fileID: 515909677643556900, guid: f53c3d71738adf9498600e94e9ce1754,
-        type: 3}
-      propertyPath: _audioSourceDie
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3871138799318191906, guid: f53c3d71738adf9498600e94e9ce1754,
         type: 3}
       propertyPath: m_Name
@@ -5021,7 +5010,7 @@ PrefabInstance:
     - target: {fileID: 3871138799318191919, guid: f53c3d71738adf9498600e94e9ce1754,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.86
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3871138799318191919, guid: f53c3d71738adf9498600e94e9ce1754,
         type: 3}
