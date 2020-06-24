@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class powerUp : MonoBehaviour
 {
@@ -11,6 +11,8 @@ public class powerUp : MonoBehaviour
     private float _rotateSpeed = 100f;
     private bool _summoned = false;
     private Vector2 _playerPos;
+    [SerializeField]
+    private bool _rotate;
     // Start is called before the first frame update
 
 
@@ -27,7 +29,7 @@ public class powerUp : MonoBehaviour
             transform.position = Vector3.MoveTowards(this.transform.position, _playerPos, _powerUpSpeed * Time.deltaTime);
         }
         
-        if (powerupID == 3) this.transform.Rotate(Vector3.forward, _rotateSpeed * Time.deltaTime, Space.Self);
+        if (_rotate == true) this.transform.Rotate(Vector3.forward, _rotateSpeed * Time.deltaTime, Space.Self);
 
         if (transform.position.y < -22.0f)
         {
@@ -80,6 +82,9 @@ public class powerUp : MonoBehaviour
                         break;
                     case 6:
                         collision.GetComponent<Player>().Neg_Powerup_Brain();
+                        break;
+                    case 7:
+                        collision.GetComponent.<Player>().powerUp_HomingShot();
                         break;
                     default:
                         Debug.Log("no powerup");
