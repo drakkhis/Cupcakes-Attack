@@ -1646,6 +1646,9 @@ MonoBehaviour:
   - _EnemyPrefabObject: {fileID: 2787801699957855632, guid: 4c89ec7fb07ecb5498962915a8910cf5,
       type: 3}
     _EnemySpawnWeight: 10
+  - _EnemyPrefabObject: {fileID: 6034448730330935458, guid: 1510cb82276559f4ea60eca9c001630e,
+      type: 3}
+    _EnemySpawnWeight: 1
 --- !u!4 &661418478
 Transform:
   m_ObjectHideFlags: 0
